@@ -14,11 +14,10 @@ def load_config(config_path: str = None) -> Dict:
     """
     # Default configuration
     config = {
-        'xpdl_file': 'data/DeadlockCaseBPMN.xpdl',  # Changed from xpdl_path to xpdl_file for consistency
-        # 'xpdl_file': 'data/Textile Industry.xpdl',
+        'xpdl_file': 'your_xpdl_file_path',  # Changed from xpdl_path to xpdl_file for consistency
         'neo4j_uri': 'bolt://localhost:7687',
-        'neo4j_user': 'neo4j',
-        'neo4j_password': '12345678'
+        'neo4j_user': 'your_username',
+        'neo4j_password': 'your_password',
     }
     
     # Load from config file if provided
