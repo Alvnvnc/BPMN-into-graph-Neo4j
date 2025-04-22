@@ -3,7 +3,7 @@ config.ini
 
 *.env
 
-analyze_sql_deadlock.py
+analyze_sql_deadlocks.py
 detect_structural_deadlock.py
 run_sql_analyzer.py
 
