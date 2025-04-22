@@ -9,4 +9,5 @@ run_sql_analyzer.py
 
 dump/
 tes/
-example/
+examples/
+reports/

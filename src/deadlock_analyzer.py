@@ -31,28 +31,28 @@ class DeadlockAnalyzer:
         """Check if required properties exist in the database."""
         with self.driver.session() as session:
             # Check processing time
-            result = session.run("MATCH (a:Activity) WHERE exists(a.processingTime) RETURN count(a) AS count")
+            result = session.run("MATCH (a:Activity) WHERE a.processingTime IS NOT NULL RETURN count(a) AS count")
             record = result.single()
             self.has_processing_time = record and record["count"] > 0
             
             # Try alternate property names for processing time
             if not self.has_processing_time:
-                result = session.run("MATCH (a:Activity) WHERE exists(a.processing_time) RETURN count(a) AS count")
+                result = session.run("MATCH (a:Activity) WHERE a.processing_time IS NOT NULL RETURN count(a) AS count")
                 record = result.single()
                 self.has_processing_time = record and record["count"] > 0
             
             # Check waiting time
-            result = session.run("MATCH (a:Activity) WHERE exists(a.waitingTime) RETURN count(a) AS count")
+            result = session.run("MATCH (a:Activity) WHERE a.waitingTime IS NOT NULL RETURN count(a) AS count")
             record = result.single()
             self.has_waiting_time = record and record["count"] > 0
             
             # Check lane property
-            result = session.run("MATCH (a:Activity) WHERE exists(a.lane) RETURN count(a) AS count")
+            result = session.run("MATCH (a:Activity) WHERE a.lane IS NOT NULL RETURN count(a) AS count")
             record = result.single()
             self.has_lane = record and record["count"] > 0
             
             # Check direction property on gateways
-            result = session.run("MATCH (g:Gateway) WHERE exists(g.direction) RETURN count(g) AS count")
+            result = session.run("MATCH (g:Gateway) WHERE g.direction IS NOT NULL RETURN count(g) AS count")
             record = result.single()
             self.has_direction = record and record["count"] > 0
             

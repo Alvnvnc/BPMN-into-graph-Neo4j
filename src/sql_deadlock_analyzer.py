@@ -28,7 +28,7 @@ class SQLDeadlockAnalyzer:
             # Try to find any activity with SQL property
             result = session.run("""
                 MATCH (a:Activity) 
-                WHERE exists(a.SQL) 
+                WHERE a.SQL IS NOT NULL 
                 RETURN count(a) AS count
             """)
             record = result.single()
@@ -120,15 +120,15 @@ class SQLDeadlockAnalyzer:
         logger.info("Analyzing activities from parallel gateways...")
         deadlocks = []
         
-        # Get activities from parallel gateways using the proper property name (SQL instead of sql)
+        # Get activities from parallel gateways using IS NOT NULL instead of exists()
         result = session.run("""
             MATCH (g:Gateway {type: 'parallel'})-[p1:FLOW*]->(a1:Activity),
                   (g)-[p2:FLOW*]->(a2:Activity)
             WHERE a1.id <> a2.id
                   AND all(r1 in p1 WHERE type(r1) = 'FLOW')
                   AND all(r2 in p2 WHERE type(r2) = 'FLOW')
-                  AND exists(a1.SQL)
-                  AND exists(a2.SQL)
+                  AND a1.SQL IS NOT NULL
+                  AND a2.SQL IS NOT NULL
             RETURN g.id AS gateway_id, g.name AS gateway_name,
                    a1.id AS task1_id, a1.name AS task1_name, a1.SQL AS sql1,
                    a2.id AS task2_id, a2.name AS task2_name, a2.SQL AS sql2
@@ -156,15 +156,15 @@ class SQLDeadlockAnalyzer:
         logger.info("Analyzing activities from inclusive gateways...")
         deadlocks = []
         
-        # Get activities from inclusive gateways using the proper property name (SQL instead of sql)
+        # Get activities from inclusive gateways using IS NOT NULL instead of exists()
         result = session.run("""
             MATCH (g:Gateway {type: 'inclusive'})-[p1:FLOW*]->(a1:Activity),
                   (g)-[p2:FLOW*]->(a2:Activity)
             WHERE a1.id <> a2.id
                   AND all(r1 in p1 WHERE type(r1) = 'FLOW')
                   AND all(r2 in p2 WHERE type(r2) = 'FLOW')
-                  AND exists(a1.SQL)
-                  AND exists(a2.SQL)
+                  AND a1.SQL IS NOT NULL
+                  AND a2.SQL IS NOT NULL
             RETURN g.id AS gateway_id, g.name AS gateway_name,
                    a1.id AS task1_id, a1.name AS task1_name, a1.SQL AS sql1,
                    a2.id AS task2_id, a2.name AS task2_name, a2.SQL AS sql2
@@ -192,12 +192,12 @@ class SQLDeadlockAnalyzer:
         logger.info("Analyzing activities across parallel process segments...")
         deadlocks = []
         
-        # Get parallel sequences that might run concurrently - using exists() for property checks
+        # Get parallel sequences that might run concurrently - using IS NOT NULL instead of exists()
         result = session.run("""
             MATCH (a1:Activity), (a2:Activity)
             WHERE a1.id <> a2.id
-                AND exists(a1.SQL)
-                AND exists(a2.SQL)
+                AND a1.SQL IS NOT NULL
+                AND a2.SQL IS NOT NULL
                 AND NOT (a1)-[:FLOW*]->(a2)
                 AND NOT (a2)-[:FLOW*]->(a1)
             RETURN a1.id AS task1_id, a1.name AS task1_name, a1.SQL AS sql1,
