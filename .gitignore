@@ -1,0 +1,12 @@
+catatan.txt
+config.ini
+
+*.env
+
+analyze_sql_deadlock.py
+detect_structural_deadlock.py
+run_sql_analyzer.py
+
+dump/
+tes/
+example/
