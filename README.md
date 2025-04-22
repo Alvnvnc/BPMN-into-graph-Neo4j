@@ -17,7 +17,7 @@ potential deadlocks.
 1. Clone the repository:
    ```
    https://github.com/Alvnvnc/BPMN-into-graph-Neo4j
-   cd xpdl-to-neo4j
+   cd BPMN-into-graph-Neo4j
    ```
 
 2. Install required dependencies:
