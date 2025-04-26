@@ -3,8 +3,6 @@ from neo4j import GraphDatabase
 import logging
 import re
 from typing import Dict, List, Optional, Tuple, Set
-# Change relative import to absolute import
-from deadlock_detector import DeadlockDetector
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -52,7 +50,6 @@ class XPDLToNeo4jConverter:
         self.transitions = {}
         self.gateways = {}
         self.gateway_patterns = {}
-        self.deadlocks = []
         
     def load_and_parse(self) -> None:
         """Load and parse the XPDL file."""
@@ -387,20 +384,20 @@ class XPDLToNeo4jConverter:
         """
         if pattern_type == 'Split':
             if gateway_type == 'Exclusive':
-                return 'EXCLUSIVE_SPLIT'
+                return 'XOR_SPLIT'
             elif gateway_type == 'Inclusive':
-                return 'INCLUSIVE_SPLIT'
+                return 'OR_SPLIT'
             elif gateway_type == 'Parallel':
-                return 'PARALLEL_SPLIT'
+                return 'AND_SPLIT'
             else:
                 return 'GATEWAY_SPLIT'
         elif pattern_type == 'Join':
             if gateway_type == 'Exclusive':
-                return 'EXCLUSIVE_JOIN'
+                return 'XOR_JOIN'
             elif gateway_type == 'Inclusive':
-                return 'INCLUSIVE_JOIN'
+                return 'OR_JOIN'
             elif gateway_type == 'Parallel':
-                return 'PARALLEL_JOIN'
+                return 'AND_JOIN'
             else:
                 return 'GATEWAY_JOIN'
         else:
@@ -599,7 +596,7 @@ class XPDLToNeo4jConverter:
                 """
                 MATCH (source) WHERE source.id = $from_id
                 MATCH (target) WHERE target.id = $to_id
-                CREATE (source)-[r:FLOWS_TO $properties]->(target)
+                CREATE (source)-[r:Sequence $properties]->(target)
                 """,
                 from_id=transition['from'],
                 to_id=transition['to'],
@@ -607,195 +604,7 @@ class XPDLToNeo4jConverter:
             )
         
         logger.info(f"Created {len(direct_transitions)} direct transition relationships")
-    
-    def _import_deadlock_analysis(self) -> None:
-        """Import deadlock analysis results to Neo4j."""
-        if not self.deadlocks:
-            return
-            
-        with self.driver.session() as session:
-            for idx, deadlock in enumerate(self.deadlocks):
-                # Create unique ID for the deadlock
-                deadlock_id = f"deadlock_{idx}_{deadlock['type'].lower()}"
-                
-                # Create deadlock node
-                properties = {
-                    'id': deadlock_id,
-                    'type': deadlock['type'],
-                    'subtype': deadlock['subtype'],
-                    'description': deadlock['description'],
-                    'severity': deadlock['severity']
-                }
-                
-                # Add any additional properties
-                for key, value in deadlock.items():
-                    if key not in ['type', 'subtype', 'description', 'severity', 
-                                   'element_id', 'element2_id', 'element_name', 
-                                   'element2_name', 'affected_nodes']:
-                        properties[key] = value
-                
-                # Create the deadlock node with proper label based on type
-                session.run(
-                    f"""
-                    CREATE (d:Deadlock:{deadlock['type']}Deadlock {{
-                        id: $id,
-                        type: $type,
-                        subtype: $subtype,
-                        description: $description,
-                        severity: $severity
-                    }})
-                    """,
-                    **properties
-                )
-                
-                # Connect to all affected nodes
-                if 'affected_nodes' in deadlock:
-                    for affected_id in deadlock['affected_nodes']:
-                        session.run(
-                            """
-                            MATCH (d:Deadlock {id: $deadlock_id})
-                            MATCH (e) WHERE e.id = $element_id
-                            CREATE (d)-[:AFFECTS {reason: $reason}]->(e)
-                            """,
-                            deadlock_id=properties['id'],
-                            element_id=affected_id,
-                            reason=f"Involved in {deadlock['type']} deadlock: {deadlock['subtype']}"
-                        )
-                else:
-                    # Fallback to connect to primary affected element
-                    session.run(
-                        """
-                        MATCH (d:Deadlock {id: $deadlock_id})
-                        MATCH (e) WHERE e.id = $element_id
-                        CREATE (d)-[:AFFECTS]->(e)
-                        """,
-                        deadlock_id=properties['id'],
-                        element_id=deadlock['element_id']
-                    )
-                    
-                    # Connect to secondary element if it exists
-                    if 'element2_id' in deadlock:
-                        session.run(
-                            """
-                            MATCH (d:Deadlock {id: $deadlock_id})
-                            MATCH (e) WHERE e.id = $element_id
-                            CREATE (d)-[:AFFECTS]->(e)
-                            """,
-                            deadlock_id=properties['id'],
-                            element_id=deadlock['element2_id']
-                        )
-                
-                # For SQL deadlocks, create special relationships to tables
-                if deadlock['type'] == 'SQL' and 'tables' in deadlock:
-                    for table in deadlock['tables']:
-                        session.run(
-                            """
-                            MATCH (d:Deadlock {id: $deadlock_id})
-                            MERGE (t:Table {name: $table})
-                            CREATE (d)-[:CONFLICTS_WITH {operation: 'UPDATE'}]->(t)
-                            """,
-                            deadlock_id=properties['id'],
-                            table=table
-                        )
-                
-                # For Time deadlocks in parallel paths, connect to the parallel gateway
-                if deadlock['type'] == 'Time' and 'parallel_gateway_id' in deadlock:
-                    session.run(
-                        """
-                        MATCH (d:Deadlock {id: $deadlock_id})
-                        MATCH (g) WHERE g.id = $gateway_id
-                        CREATE (d)-[:BLOCKS {reason: 'Long processing time blocks parallel execution'}]->(g)
-                        """,
-                        deadlock_id=properties['id'],
-                        gateway_id=deadlock['parallel_gateway_id']
-                    )
         
-        logger.info(f"Imported {len(self.deadlocks)} deadlock analysis results to Neo4j")
-    
-    def run_analysis_queries(self) -> Dict:
-        """
-        Run analysis queries on the imported graph to derive insights.
-        
-        Returns:
-            Dictionary with analysis results
-        """
-        results = {}
-        with self.driver.session() as session:
-            results['process_count'] = session.run(
-                "MATCH (p:Pool) RETURN count(p) AS count"
-            ).single()['count']
-            
-            results['lane_count'] = session.run(
-                "MATCH (l:Lane) RETURN count(l) AS count"
-            ).single()['count']
-            
-            results['activity_count'] = session.run(
-                "MATCH (a) WHERE a:Task OR a:Event_Start OR a:Event_End OR a:Event_Intermediate RETURN count(a) AS count"
-            ).single()['count']
-            
-            # Detect paths
-            results['paths'] = session.run(
-                """
-                MATCH path = (start:Event_Start)-[*]-(end:Event_End)
-                RETURN count(path) AS pathCount
-                """
-            ).single()['pathCount']
-            
-            # Detect potential deadlocks (cycles)
-            results['potential_deadlocks'] = session.run(
-                """
-                MATCH (a)-[r1]->(b)-[r2*]->(a)
-                WHERE NOT a:Event_Start AND NOT a:Event_End
-                RETURN count(DISTINCT a) AS cycleCount
-                """
-            ).single()['cycleCount']
-            
-            # Add deadlock-specific analysis
-            results['deadlocks_by_type'] = {}
-            for deadlock_type in ['Structural', 'SQL', 'Time']:
-                count = session.run(
-                    """
-                    MATCH (d:Deadlock {type: $type})
-                    RETURN count(d) AS count
-                    """,
-                    type=deadlock_type
-                ).single()['count']
-                results['deadlocks_by_type'][deadlock_type] = count
-            
-            # Find activities involved in deadlocks
-            deadlock_activities = session.run(
-                """
-                MATCH (d:Deadlock)-[:AFFECTS]->(a)
-                RETURN a.id AS id, a.name AS name, collect(d.type) AS deadlock_types
-                """
-            )
-            results['deadlock_activities'] = [
-                {
-                    'id': record['id'],
-                    'name': record['name'],
-                    'deadlock_types': record['deadlock_types']
-                }
-                for record in deadlock_activities
-            ]
-            
-            # Find lanes with most deadlocks
-            lanes_with_deadlocks = session.run(
-                """
-                MATCH (d:Deadlock)-[:AFFECTS]->(a)-[:IN_LANE]->(l)
-                RETURN l.name AS lane, count(d) AS deadlock_count
-                ORDER BY deadlock_count DESC
-                """
-            )
-            results['lanes_with_deadlocks'] = [
-                {
-                    'lane': record['lane'],
-                    'count': record['deadlock_count']
-                }
-                for record in lanes_with_deadlocks
-            ]
-        
-        return results
-    
     def close(self) -> None:
         """Close the Neo4j driver connection."""
         self.driver.close()
@@ -812,20 +621,7 @@ class XPDLToNeo4jConverter:
             self.load_and_parse()
             self.extract_all_data()
             
-            # Detect deadlocks
-            detector = DeadlockDetector(
-                self.activities,
-                self.transitions,
-                self.gateways,
-                self.gateway_patterns
-            )
-            self.deadlocks = detector.detect_all_deadlocks()
-            
-            # Create deadlock nodes in Neo4j
             self.import_to_neo4j()
-            self._import_deadlock_analysis()
-            
-            analysis_results = self.run_analysis_queries()
             self.close()
             return {
                 'status': 'success',
@@ -834,17 +630,8 @@ class XPDLToNeo4jConverter:
                     'lanes': len(self.lanes),
                     'activities': len(self.activities) - len(self.gateways),
                     'gateways': len(self.gateways),
-                    'transitions': len(self.transitions),
-                    'deadlocks': len(self.deadlocks)
+                    'transitions': len(self.transitions)
                 },
-                'analysis': analysis_results,
-                'deadlocks': {
-                    'count': len(self.deadlocks),
-                    'structural': len([d for d in self.deadlocks if d['type'] == 'Structural']),
-                    'sql': len([d for d in self.deadlocks if d['type'] == 'SQL']),
-                    'time': len([d for d in self.deadlocks if d['type'] == 'Time']),
-                    'details': self.deadlocks
-                }
             }
         except Exception as e:
             logger.error(f"Error processing XPDL: {str(e)}")

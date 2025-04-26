@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Tuple, Set, Any
 import logging
 
 from config import NAMESPACES, GATEWAY_TYPES, logger
-from models import Participant, Pool, Lane, Activity, Gateway, Transition, GatewayPattern
+from dump.models import Participant, Pool, Lane, Activity, Gateway, Transition, GatewayPattern
 
 class XPDLParser:
     """Parses XPDL files and extracts process data"""

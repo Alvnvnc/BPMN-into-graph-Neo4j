@@ -12,3 +12,4 @@ dump/
 tes/
 examples/
 reports/
+src/__pycache__/
