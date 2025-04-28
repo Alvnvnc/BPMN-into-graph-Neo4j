@@ -117,7 +117,7 @@ class DeadlockDetector:
                     })
         return predictions
 
-    def calculate_dynamic_thresholds(self) -> (float, float):
+    def calculate_dynamic_thresholds(self) -> (float, float): # type: ignore
         times = [self._parse_time(activity.get('Time', '0')) for activity in self.activities.values() if self._parse_time(activity.get('Time', '0')) is not None]
         if not times:
             return 60.0, 120.0
@@ -131,7 +131,7 @@ class DeadlockDetector:
         except (ValueError, TypeError):
             return None
 
-    def _check_if_in_parallel_path(self, activity_id: str) -> (bool, str):
+    def _check_if_in_parallel_path(self, activity_id: str) -> (bool, str): # type: ignore
         for gw_id, pattern in self.gateway_patterns.items():
             if pattern['pattern'] == 'Split' and pattern['subtype'] == 'Parallel':
                 if self._is_activity_in_gateway_path(gw_id, activity_id):
