@@ -13,17 +13,22 @@ class DeadlockDetector:
     - Fully compatible with Parallel, Inclusive, Exclusive, Complex, Event-Based gateways
     """
 
-    def __init__(self, activities: Dict, transitions: Dict, gateways: Dict, gateway_patterns: Dict):
+    def __init__(self, activities: Dict, transitions: Dict, gateways: Dict, gateway_patterns: Dict, enable_prediction: bool = True):
         self.activities = activities
         self.transitions = transitions
         self.gateways = gateways
         self.gateway_patterns = gateway_patterns
         self.deadlocks = []
+        self.predictions = []
+        self.enable_prediction = enable_prediction
 
     def detect_all_deadlocks(self) -> List[Dict]:
         self.deadlocks = []
+        self.predictions = []
         self.detect_structural_deadlocks()
         self.detect_time_deadlocks()
+        if self.enable_prediction:
+            self.predictions = self.predict_potential_time_deadlocks()
         return self.deadlocks
 
     def detect_structural_deadlocks(self) -> List[Dict]:
@@ -97,7 +102,7 @@ class DeadlockDetector:
     def predict_potential_time_deadlocks(self, threshold: float = 60) -> List[Dict]:
         predictions = []
         for gw_id, pattern in self.gateway_patterns.items():
-            if pattern['pattern'] == 'Split' and pattern['subtype'] == 'Parallel':
+            if pattern['pattern'] == 'Split' and pattern['subtype'] in ['Parallel', 'Inclusive', 'Exclusive']:
                 paths = [
                     sum(
                         self._parse_time(self.activities.get(act_id, {}).get('Time', '0')) or 0
@@ -107,17 +112,18 @@ class DeadlockDetector:
                 if paths and max(paths) - min(paths) >= threshold:
                     predictions.append({
                         'type': 'Prediction',
-                        'subtype': 'Potential Time Deadlock',
+                        'subtype': f'Potential Time Deadlock ({pattern["subtype"]})',
                         'gateway_id': gw_id,
+                        'gateway_type': pattern['subtype'],
                         'max_time': max(paths),
                         'min_time': min(paths),
                         'delta_time': max(paths) - min(paths),
-                        'description': f"Time imbalance across parallel paths exceeds {threshold} minutes",
+                        'description': f"Time imbalance across {pattern['subtype']} split paths exceeds {threshold} minutes",
                         'severity': 'High'
                     })
         return predictions
 
-    def calculate_dynamic_thresholds(self) -> (float, float): # type: ignore
+    def calculate_dynamic_thresholds(self) -> (float, float):
         times = [self._parse_time(activity.get('Time', '0')) for activity in self.activities.values() if self._parse_time(activity.get('Time', '0')) is not None]
         if not times:
             return 60.0, 120.0
@@ -131,9 +137,9 @@ class DeadlockDetector:
         except (ValueError, TypeError):
             return None
 
-    def _check_if_in_parallel_path(self, activity_id: str) -> (bool, str): # type: ignore
+    def _check_if_in_parallel_path(self, activity_id: str) -> (bool, str):
         for gw_id, pattern in self.gateway_patterns.items():
-            if pattern['pattern'] == 'Split' and pattern['subtype'] == 'Parallel':
+            if pattern['pattern'] == 'Split' and pattern['subtype'] in ['Parallel', 'Inclusive', 'Exclusive']:
                 if self._is_activity_in_gateway_path(gw_id, activity_id):
                     return True, gw_id
         return False, None
