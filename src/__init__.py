@@ -9,7 +9,6 @@ enabling deep analysis of business processes, including deadlock detection.
 from converter import XPDLToNeo4jConverter
 from src.deadlock_detector import DeadlockDetector
 from config import load_config, save_config
-from utils import generate_cypher_query_examples, save_query_examples
 
 __all__ = [
     'XPDLToNeo4jConverter',

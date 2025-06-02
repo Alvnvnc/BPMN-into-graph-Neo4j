@@ -1,0 +1,170 @@
+{
+    "analysis_summary": {
+        "total_sql_nodes": 20,
+        "nodes_with_waits": 2,
+        "deadlock_cycles_found": 1,
+        "resources_analyzed": 13
+    },
+    "bpmn_flow_analysis": {
+        "concurrent_paths_found": 5,
+        "parallel_branches_analyzed": 5,
+        "flow_based_conflicts": 2
+    },
+    "resource_analysis": {
+        "PurchaseOrders": {
+            "nodes_accessing": 4,
+            "lock_types": [
+                "SHARED",
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": true
+        },
+        "FinancialValidations": {
+            "nodes_accessing": 1,
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": false
+        },
+        "VendorNotifications": {
+            "nodes_accessing": 1,
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": false
+        },
+        "Orders": {
+            "nodes_accessing": 3,
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": true
+        },
+        "FinancialTransactions": {
+            "nodes_accessing": 1,
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": false
+        },
+        "IntegrationLogs": {
+            "nodes_accessing": 1,
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": false
+        },
+        "Inventory": {
+            "nodes_accessing": 4,
+            "lock_types": [
+                "SHARED",
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": true
+        },
+        "OrderDetails": {
+            "nodes_accessing": 2,
+            "lock_types": [
+                "SHARED",
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": true
+        },
+        "PurchaseRequisitions": {
+            "nodes_accessing": 1,
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": false
+        },
+        "DepartmentBudgets": {
+            "nodes_accessing": 1,
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": false
+        },
+        "DepartmentBudgetsWHERE": {
+            "nodes_accessing": 1,
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "potential_conflicts": false
+        },
+        "Vendors": {
+            "nodes_accessing": 1,
+            "lock_types": [
+                "SHARED"
+            ],
+            "potential_conflicts": false
+        },
+        "Systems": {
+            "nodes_accessing": 1,
+            "lock_types": [
+                "SHARED"
+            ],
+            "potential_conflicts": false
+        }
+    },
+    "deadlocks": [
+        {
+            "cycle_id": 1,
+            "severity": "MEDIUM",
+            "detection_method": "BPMN Flow Analysis",
+            "nodes": [
+                {
+                    "node_id": "dd74b104-3659-4379-9dfa-2b1464efc159",
+                    "name": "Generate PO Request",
+                    "sql": "INSERT INTO PurchaseOrders(POID, ReqID, VendorID, PODate, Status)VALUES (@poID, @reqID, @vendorID, GETDATE(), 'Draft')",
+                    "resources_accessed": [
+                        "PurchaseOrders"
+                    ],
+                    "lock_types": [
+                        "EXCLUSIVE"
+                    ],
+                    "bpmn_context": {
+                        "incoming_flows": [
+                            {
+                                "relationship": "AND_SPLIT",
+                                "source": "Create Purchase Requisition"
+                            }
+                        ],
+                        "outgoing_flows": [
+                            {
+                                "relationship": "OR_JOIN",
+                                "target": "Review Purchase Details"
+                            }
+                        ],
+                        "parallel_branches": []
+                    }
+                },
+                {
+                    "node_id": "9eb40046-d470-4044-a3ee-8556325b7184",
+                    "name": "Complete Purchase Order",
+                    "sql": "UPDATE PurchaseOrdersSET Status = 'Completed', CompletedDate = GETDATE()WHERE POID = @poID",
+                    "resources_accessed": [
+                        "PurchaseOrders"
+                    ],
+                    "lock_types": [
+                        "EXCLUSIVE"
+                    ],
+                    "bpmn_context": {
+                        "incoming_flows": [
+                            {
+                                "relationship": "AND_SPLIT",
+                                "source": "Validate Financial Impact"
+                            }
+                        ],
+                        "outgoing_flows": [
+                            {
+                                "relationship": "Sequence",
+                                "target": "Notify Vendors"
+                            }
+                        ],
+                        "parallel_branches": []
+                    }
+                }
+            ]
+        }
+    ]
+}

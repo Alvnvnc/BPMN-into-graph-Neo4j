@@ -403,25 +403,67 @@ class XPDLToNeo4jConverter:
         else:
             return 'GATEWAY_CONNECTION'
     
-    def import_to_neo4j(self) -> None:
-        """Import all extracted data to Neo4j."""
-        with self.driver.session() as session:
-            self._clear_database(session)
-            self._import_pools_and_lanes(session)
-            self._import_activities(session)
-            self._import_semantic_relationships(session)
-            self._import_direct_transitions(session)
+    def _identify_gateway_connections(self) -> Dict[str, Dict]:
+        """
+        Identify gateways that connect directly to other gateways and create mapping
+        for intermediate nodes.
         
-        logger.info("Data successfully imported to Neo4j")
-    
+        Returns:
+            Dictionary mapping transition IDs to information about gateway connections
+        """
+        gateway_ids = set(self.gateways.keys())
+        gateway_connections = {}
+        
+        # Check all transitions for gateway-to-gateway connections
+        for transition_id, transition in self.transitions.items():
+            from_id = transition['from']
+            to_id = transition['to']
+            
+            # If both source and target are gateways
+            if from_id in gateway_ids and to_id in gateway_ids:
+                from_gateway = self.gateways[from_id]
+                to_gateway = self.gateways[to_id]
+                
+                # Generate a unique ID for the intermediate node
+                intermediate_id = f"inter_{from_id}_{to_id}"
+                intermediate_name = f"Gateway Connection: {from_gateway['name']} to {to_gateway['name']}"
+                
+                # Store connection info
+                gateway_connections[transition_id] = {
+                    'transition_id': transition_id,
+                    'from_gateway_id': from_id,
+                    'to_gateway_id': to_id,
+                    'from_gateway_type': from_gateway['subtype'],
+                    'to_gateway_type': to_gateway['subtype'],
+                    'intermediate_id': intermediate_id,
+                    'intermediate_name': intermediate_name,
+                    'condition': transition['condition'],
+                    'name': transition['name'],
+                    'process_id': transition['process_id']
+                }
+        
+        logger.info(f"Identified {len(gateway_connections)} direct gateway-to-gateway connections")
+        return gateway_connections
+
     def _clear_database(self, session) -> None:
-        """Clear the Neo4j database before importing new data."""
-        logger.info("Clearing Neo4j database")
+        """
+        Clear all existing data from the Neo4j database.
+        
+        Args:
+            session: Neo4j session
+        """
+        logger.info("Clearing existing data from Neo4j database")
         session.run("MATCH (n) DETACH DELETE n")
-    
+        logger.info("Database cleared")
+
     def _import_pools_and_lanes(self, session) -> None:
-        """Import pools and lanes (departments) to Neo4j."""
-        # Create Pool nodes
+        """
+        Import pools and lanes to Neo4j.
+        
+        Args:
+            session: Neo4j session
+        """
+        # Import Pools
         for pool_id, pool in self.pools.items():
             session.run(
                 """
@@ -436,35 +478,48 @@ class XPDLToNeo4jConverter:
                 process=pool['process']
             )
         
-        # Create Lane nodes and connect to Pool
+        # Import Lanes
         for lane_id, lane in self.lanes.items():
             session.run(
                 """
-                MATCH (p:Pool {id: $pool_id})
                 CREATE (l:Lane {
                     id: $id,
                     name: $name,
                     performer: $performer
                 })
-                CREATE (l)-[:BELONGS_TO]->(p)
                 """,
                 id=lane['id'],
                 name=lane['name'],
-                performer=lane['performer'],
+                performer=lane['performer']
+            )
+            
+            # Create relationship between Lane and Pool
+            session.run(
+                """
+                MATCH (l:Lane {id: $lane_id})
+                MATCH (p:Pool {id: $pool_id})
+                CREATE (l)-[:IN_POOL]->(p)
+                """,
+                lane_id=lane['id'],
                 pool_id=lane['pool_id']
             )
-        
-        logger.info(f"Imported {len(self.pools)} pools and {len(self.lanes)} lanes to Neo4j")
-    
-    def _import_activities(self, session) -> None:
-        """Import activities to Neo4j."""
-        # Create Activity nodes
-        for activity_id, activity in self.activities.items():
-            # Skip gateways as they'll be handled differently
-            if activity['type'] == 'Gateway':
-                continue
             
-            # Base properties for all activities
+        logger.info(f"Imported {len(self.pools)} pools and {len(self.lanes)} lanes to Neo4j")
+
+    def _import_activities(self, session) -> None:
+        """
+        Import all activities (except gateways) to Neo4j.
+        
+        Args:
+            session: Neo4j session
+        """
+        # Filter out gateways
+        gateway_ids = set(self.gateways.keys())
+        activities = {act_id: act for act_id, act in self.activities.items() if act_id not in gateway_ids}
+        
+        # Import activities
+        for activity_id, activity in activities.items():
+            # Base properties for activity
             properties = {
                 'id': activity['id'],
                 'name': activity['name'],
@@ -481,20 +536,13 @@ class XPDLToNeo4jConverter:
             # Build dynamic properties query part
             props_string = ", ".join([f"{k}: ${k}" for k in properties.keys()])
             
-            # Create node with the right label based on type and all properties
-            if activity['type'] == 'Event':
-                label = f"Event_{activity['subtype']}"
-                query = f"""
-                CREATE (a:{label} {{
-                    {props_string}
-                }})
-                """
-            else:  # Task type
-                query = f"""
-                CREATE (a:Task {{
-                    {props_string}
-                }})
-                """
+            # Create node with proper label based on type and subtype
+            node_label = f"{activity['type']}_{activity['subtype']}"
+            query = f"""
+            CREATE (a:{node_label} {{
+                {props_string}
+            }})
+            """
             
             session.run(query, **properties)
             
@@ -510,21 +558,353 @@ class XPDLToNeo4jConverter:
                     lane_id=activity['lane_id']
                 )
         
-        logger.info(f"Imported {len(self.activities) - len(self.gateways)} activities to Neo4j")
+        logger.info(f"Imported {len(activities)} activities to Neo4j")
+
+    def _import_gateway_nodes(self, session, connected_gateways: Set[str]) -> None:
+        """
+        Import gateway nodes to Neo4j, but only those that connect to other gateways.
+        
+        Args:
+            session: Neo4j session
+            connected_gateways: Set of gateway IDs that should be created as nodes
+        """
+        # Create Gateway nodes only for gateways that connect to other gateways
+        for gateway_id in connected_gateways:
+            gateway = self.gateways[gateway_id]
+            
+            # Base properties for gateway
+            properties = {
+                'id': gateway['id'],
+                'name': gateway['name'],
+                'type': gateway['type'],
+                'subtype': gateway['subtype'],
+                'process_id': gateway['process_id']
+            }
+            
+            # Add all extended attributes and other properties
+            for key, value in gateway.items():
+                if key not in properties and key != 'lane_id':
+                    properties[key] = value
+            
+            # Build dynamic properties query part
+            props_string = ", ".join([f"{k}: ${k}" for k in properties.keys()])
+            
+            # Create Gateway node with proper label based on subtype
+            gateway_label = f"Gateway_{gateway['subtype']}"
+            query = f"""
+            CREATE (g:{gateway_label} {{
+                {props_string}
+            }})
+            """
+            
+            session.run(query, **properties)
+            
+            # Connect to Lane if lane_id is available
+            if gateway['lane_id']:
+                session.run(
+                    """
+                    MATCH (g) WHERE g.id = $gateway_id
+                    MATCH (l:Lane {id: $lane_id})
+                    CREATE (g)-[:IN_LANE]->(l)
+                    """,
+                    gateway_id=gateway['id'],
+                    lane_id=gateway['lane_id']
+                )
+        
+        logger.info(f"Imported {len(connected_gateways)} gateway nodes to Neo4j")
+
+    def _import_gateway_connections(self, session, connected_gateways: Set[str]) -> None:
+        """
+        Import direct gateway-to-gateway connections.
+        
+        Args:
+            session: Neo4j session
+            connected_gateways: Set of gateway IDs that were created as nodes
+        """
+        # Get transitions between gateways
+        gateway_transitions = []
+        gateway_ids = set(self.gateways.keys())
+        
+        for transition_id, transition in self.transitions.items():
+            from_id = transition['from']
+            to_id = transition['to']
+            
+            # If both source and target are gateways and both were created as nodes
+            if (from_id in gateway_ids and to_id in gateway_ids and 
+                from_id in connected_gateways and to_id in connected_gateways):
+                gateway_transitions.append(transition)
+        
+        # Create relationships for gateway-to-gateway transitions
+        for transition in gateway_transitions:
+            properties = {
+                'id': transition['id'],
+                'name': transition['name']
+            }
+            
+            if transition['condition']:
+                properties['condition'] = transition['condition']
+            
+            # Create the relationship
+            session.run(
+                """
+                MATCH (source) WHERE source.id = $from_id
+                MATCH (target) WHERE target.id = $to_id
+                CREATE (source)-[r:GATEWAY_FLOW $properties]->(target)
+                """,
+                from_id=transition['from'],
+                to_id=transition['to'],
+                properties=properties
+            )
+        
+        logger.info(f"Created {len(gateway_transitions)} gateway-to-gateway connections")
     
+    def import_to_neo4j(self) -> None:
+        """Import all extracted data to Neo4j."""
+        with self.driver.session() as session:
+            self._clear_database(session)
+            self._import_pools_and_lanes(session)
+            
+            # Identify gateway connections
+            gateway_connections = self._identify_gateway_connections()
+            
+            # Import activities (excluding gateways)
+            self._import_activities(session)
+            
+            # Import intermediate nodes for gateway-to-gateway connections
+            self._import_intermediate_nodes(session, gateway_connections)
+            
+            # Import semantic relationships for normal gateway patterns
+            # (excluding gateway-to-gateway connections handled through intermediate nodes)
+            self._import_semantic_relationships(session)
+            
+            # Import direct transitions (non-gateway to non-gateway)
+            self._import_direct_transitions(session)
+        
+        logger.info("Data successfully imported to Neo4j")
+
+    def _import_intermediate_nodes(self, session, gateway_connections: Dict[str, Dict]) -> None:
+        """
+        Import intermediate nodes for gateway-to-gateway connections and create relationships.
+        
+        Args:
+            session: Neo4j session
+            gateway_connections: Dictionary of gateway connections info
+        """
+        if not gateway_connections:
+            logger.info("No gateway-to-gateway connections to process")
+            return
+            
+        logger.info(f"Creating {len(gateway_connections)} intermediate nodes for gateway-to-gateway connections")
+        
+        for transition_id, connection in gateway_connections.items():
+            # Create intermediate node
+            properties = {
+                'id': connection['intermediate_id'],
+                'name': connection['intermediate_name'],
+                'type': 'IntermediateNode',
+                'is_gateway_connector': True,
+                'from_gateway': connection['from_gateway_id'],
+                'to_gateway': connection['to_gateway_id'],
+                'process_id': connection['process_id']
+            }
+            
+            # Create the intermediate node
+            session.run(
+                """
+                CREATE (n:IntermediateNode {
+                    id: $id,
+                    name: $name,
+                    type: $type,
+                    is_gateway_connector: $is_gateway_connector,
+                    from_gateway: $from_gateway,
+                    to_gateway: $to_gateway,
+                    process_id: $process_id
+                })
+                """,
+                **properties
+            )
+            
+            # Get the gateway patterns to determine relationship types
+            from_gateway_id = connection['from_gateway_id']
+            to_gateway_id = connection['to_gateway_id']
+            
+            # Get relationship types based on gateway types and patterns
+            from_rel_type = self._get_relationship_type_for_gateway(from_gateway_id, 'outgoing')
+            to_rel_type = self._get_relationship_type_for_gateway(to_gateway_id, 'incoming')
+            
+            # Create relationship from source activity to intermediate node
+            self._create_gateway_to_intermediate_relationship(session, from_gateway_id, connection['intermediate_id'], from_rel_type, connection)
+            
+            # Create relationship from intermediate node to target activity
+            self._create_intermediate_to_gateway_relationship(session, connection['intermediate_id'], to_gateway_id, to_rel_type, connection)
+        
+        logger.info(f"Created {len(gateway_connections)} intermediate nodes with relationships")
+    
+    def _get_relationship_type_for_gateway(self, gateway_id: str, direction: str) -> str:
+        """
+        Determine the relationship type for a gateway based on its pattern.
+        
+        Args:
+            gateway_id: ID of the gateway
+            direction: Either 'incoming' or 'outgoing'
+            
+        Returns:
+            Relationship type
+        """
+        if gateway_id not in self.gateway_patterns:
+            return 'GATEWAY_CONNECTION'
+            
+        pattern = self.gateway_patterns[gateway_id]
+        gateway_type = self.gateways[gateway_id]['subtype']
+        
+        if direction == 'outgoing':
+            # For outgoing, use the split type if it's a split, otherwise use a generic type
+            if pattern['pattern'] == 'Split':
+                return pattern['relationship_type'] 
+            else:
+                return f"{self._map_gateway_to_prefix(gateway_type)}_CONNECTION"
+        else:  # incoming
+            # For incoming, use the join type if it's a join, otherwise use a generic type
+            if pattern['pattern'] == 'Join':
+                return pattern['relationship_type']
+            else:
+                return f"{self._map_gateway_to_prefix(gateway_type)}_CONNECTION"
+    
+    def _map_gateway_to_prefix(self, gateway_type: str) -> str:
+        """
+        Map gateway type to prefix for relationship type.
+        
+        Args:
+            gateway_type: The type of the gateway
+            
+        Returns:
+            String prefix for relationship type
+        """
+        if gateway_type == 'Exclusive':
+            return 'XOR'
+        elif gateway_type == 'Inclusive':
+            return 'OR'
+        elif gateway_type == 'Parallel':
+            return 'AND'
+        elif gateway_type == 'Complex':
+            return 'COMPLEX'
+        elif gateway_type == 'EventBased':
+            return 'EVENT'
+        else:
+            return 'GATEWAY'
+    
+    def _create_gateway_to_intermediate_relationship(self, session, gateway_id: str, intermediate_id: str, 
+                                                    rel_type: str, connection: Dict) -> None:
+        """
+        Create relationship from gateway to intermediate node.
+        
+        Args:
+            session: Neo4j session
+            gateway_id: ID of the source gateway
+            intermediate_id: ID of the intermediate node
+            rel_type: Relationship type
+            connection: Connection information
+        """
+        properties = {
+            'transition_id': connection['transition_id']
+        }
+        
+        if connection['condition']:
+            properties['condition'] = connection['condition']
+        
+        if connection['name']:
+            properties['name'] = connection['name']
+        
+        # Find the activities connected to the source gateway
+        source_activities = []
+        for transition in self.transitions.values():
+            if transition['to'] == gateway_id and transition['from'] not in self.gateways:
+                source_activities.append(transition['from'])
+        
+        # Create relationship from each source activity to the intermediate node with the appropriate rel_type
+        for source_id in source_activities:
+            session.run(
+                f"""
+                MATCH (source) WHERE source.id = $source_id
+                MATCH (target:IntermediateNode) WHERE target.id = $intermediate_id
+                CREATE (source)-[r:{rel_type} $properties]->(target)
+                """,
+                source_id=source_id,
+                intermediate_id=intermediate_id,
+                properties=properties
+            )
+    
+    def _create_intermediate_to_gateway_relationship(self, session, intermediate_id: str, gateway_id: str, 
+                                                   rel_type: str, connection: Dict) -> None:
+        """
+        Create relationship from intermediate node to target activities.
+        
+        Args:
+            session: Neo4j session
+            intermediate_id: ID of the intermediate node
+            gateway_id: ID of the target gateway
+            rel_type: Relationship type
+            connection: Connection information
+        """
+        properties = {
+            'transition_id': connection['transition_id']
+        }
+        
+        if connection['condition']:
+            properties['condition'] = connection['condition']
+        
+        if connection['name']:
+            properties['name'] = connection['name']
+        
+        # Find the activities connected from the target gateway
+        target_activities = []
+        for transition in self.transitions.values():
+            if transition['from'] == gateway_id and transition['to'] not in self.gateways:
+                target_activities.append(transition['to'])
+        
+        # Create relationship from intermediate node to each target activity with the appropriate rel_type
+        for target_id in target_activities:
+            session.run(
+                f"""
+                MATCH (source:IntermediateNode) WHERE source.id = $intermediate_id
+                MATCH (target) WHERE target.id = $target_id
+                CREATE (source)-[r:{rel_type} $properties]->(target)
+                """,
+                intermediate_id=intermediate_id,
+                target_id=target_id,
+                properties=properties
+            )
+
     def _import_semantic_relationships(self, session) -> None:
         """
         Import semantic relationships based on gateway patterns.
-        This creates direct relationships between activities connected through gateways.
+        This creates direct relationships between activities connected through gateways,
+        but excludes gateway-to-gateway connections that are handled separately.
         """
+        # Get all gateway-to-gateway connections to exclude them
+        gateway_ids = set(self.gateways.keys())
+        gateway_to_gateway_transitions = set()
+        
+        for transition_id, transition in self.transitions.items():
+            if transition['from'] in gateway_ids and transition['to'] in gateway_ids:
+                gateway_to_gateway_transitions.add(transition_id)
+        
         for gateway_id, pattern in self.gateway_patterns.items():
             relationship_type = pattern['relationship_type']
             
             if pattern['pattern'] == 'Split':
                 # For splits, connect the source to all targets directly
-                source = pattern['incoming'][0]['from']
+                incoming_transitions = pattern['incoming']
+                if not incoming_transitions:
+                    continue
+                
+                source = incoming_transitions[0]['from']
                 
                 for outgoing in pattern['outgoing']:
+                    # Skip if this is a gateway-to-gateway connection
+                    if outgoing['id'] in gateway_to_gateway_transitions:
+                        continue
+                        
                     target = outgoing['to']
                     properties = {
                         'gateway_id': gateway_id,
@@ -535,39 +915,47 @@ class XPDLToNeo4jConverter:
                     if outgoing['condition']:
                         properties['condition'] = outgoing['condition']
                     
-                    # Create relationship
-                    session.run(
-                        f"""
-                        MATCH (source) WHERE source.id = $source_id
-                        MATCH (target) WHERE target.id = $target_id
-                        CREATE (source)-[r:{relationship_type} $properties]->(target)
-                        """,
-                        source_id=source,
-                        target_id=target,
-                        properties=properties
-                    )
+                    # Create relationship only if target is not a gateway
+                    if target not in gateway_ids:
+                        session.run(
+                            f"""
+                            MATCH (source) WHERE source.id = $source_id
+                            MATCH (target) WHERE target.id = $target_id
+                            CREATE (source)-[r:{relationship_type} $properties]->(target)
+                            """,
+                            source_id=source,
+                            target_id=target,
+                            properties=properties
+                        )
             
             elif pattern['pattern'] == 'Join':
                 # For joins, connect all sources to the target directly
-                target = pattern['outgoing'][0]['to']
+                outgoing_transitions = pattern['outgoing']
+                if not outgoing_transitions:
+                    continue
+                
+                target = outgoing_transitions[0]['to']
                 
                 for incoming in pattern['incoming']:
+                    # Skip if this is a gateway-to-gateway connection
+                    if incoming['id'] in gateway_to_gateway_transitions:
+                        continue
+                        
                     source = incoming['from']
                     
-                    # Create relationship
-                    session.run(
-                        f"""
-                        MATCH (source) WHERE source.id = $source_id
-                        MATCH (target) WHERE target.id = $target_id
-                        CREATE (source)-[r:{relationship_type} {{gateway_id: $gateway_id, gateway_type: $gateway_type}}]->(target)
-                        """,
-                        source_id=source,
-                        target_id=target,
-                        gateway_id=gateway_id,
-                        gateway_type=pattern['subtype']
-                    )
-        
-        logger.info(f"Created semantic relationships based on {len(self.gateway_patterns)} gateway patterns")
+                    # Create relationship only if source is not a gateway
+                    if source not in gateway_ids:
+                        session.run(
+                            f"""
+                            MATCH (source) WHERE source.id = $source_id
+                            MATCH (target) WHERE target.id = $target_id
+                            CREATE (source)-[r:{relationship_type} {{gateway_id: $gateway_id, gateway_type: $gateway_type}}]->(target)
+                            """,
+                            source_id=source,
+                            target_id=target,
+                            gateway_id=gateway_id,
+                            gateway_type=pattern['subtype']
+                        )
     
     def _import_direct_transitions(self, session) -> None:
         """
@@ -596,7 +984,7 @@ class XPDLToNeo4jConverter:
                 """
                 MATCH (source) WHERE source.id = $from_id
                 MATCH (target) WHERE target.id = $to_id
-                CREATE (source)-[r:Sequence $properties]->(target)
+                CREATE (source)-[r:SEQUENCE $properties]->(target)
                 """,
                 from_id=transition['from'],
                 to_id=transition['to'],

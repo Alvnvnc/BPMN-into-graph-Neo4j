@@ -1,0 +1,10 @@
+# Enhanced requirements with better parsing libraries
+neo4j==5.24.0
+sqlparse==0.4.4          # Professional SQL parser instead of regex
+configparser==6.0.0      # Better config management
+pydantic==2.5.0          # Data validation and settings management  
+sqlalchemy==2.0.23       # SQL metadata and schema inspection
+networkx==3.2.1          # Graph algorithms and analysis
+typing-extensions==4.8.0
+dataclasses-json==0.6.3  # JSON serialization for data classes
+pathlib2==2.3.7          # Better path handling

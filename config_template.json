@@ -1,0 +1,126 @@
+{
+  "database": {
+    "uri": "bolt://localhost:7687",
+    "user": "neo4j",
+    "password": "password",
+    "timeout": 30
+  },
+  "node_fields": {
+    "id_field": "id",
+    "sql_field": "SQL",
+    "name_field": "name",
+    "type_field": "type"
+  },
+  "bpmn": {
+    "relationship_types": [
+      "SEQUENCE_FLOW",
+      "MESSAGE_FLOW",
+      "ASSOCIATION"
+    ],
+    "parallel_gateway_types": [
+      "PARALLEL_GATEWAY",
+      "INCLUSIVE_GATEWAY"
+    ],
+    "sequential_flow_type": "SEQUENCE_FLOW"
+  },
+  "sql_parsing": {
+    "operation_patterns": {
+      "SELECT": "\\bSELECT\\s+.*?\\bFROM\\s+([^\\s,;()]+)",
+      "INSERT": "\\bINSERT\\s+INTO\\s+([^\\s,;()]+)",
+      "UPDATE": "\\bUPDATE\\s+([^\\s,;()]+)\\s+SET",
+      "DELETE": "\\bDELETE\\s+FROM\\s+([^\\s,;()]+)",
+      "CREATE": "\\bCREATE\\s+(?:TABLE|VIEW|INDEX)\\s+([^\\s,;()]+)",
+      "DROP": "\\bDROP\\s+(?:TABLE|VIEW|INDEX)\\s+([^\\s,;()]+)",
+      "ALTER": "\\bALTER\\s+TABLE\\s+([^\\s,;()]+)"
+    },
+    "table_extraction_patterns": [
+      "\\b(?:FROM|JOIN|INTO|UPDATE|TABLE)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+      "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s+(?:SET|WHERE)"
+    ],
+    "excluded_keywords": [
+      "HAVING",
+      "INNER",
+      "DELETE",
+      "WHERE",
+      "ON",
+      "INTO",
+      "SET",
+      "JOIN",
+      "INSERT",
+      "VIEW",
+      "NULL",
+      "ORDER",
+      "AND",
+      "AS",
+      "DROP",
+      "BY",
+      "LEFT",
+      "FROM",
+      "OUTER",
+      "NOT",
+      "CREATE",
+      "RIGHT",
+      "UPDATE",
+      "OR",
+      "ALTER",
+      "TABLE",
+      "SELECT",
+      "INDEX",
+      "VALUES",
+      "GROUP"
+    ],
+    "lock_mapping": {
+      "SELECT": [
+        "SHARED"
+      ],
+      "INSERT": [
+        "EXCLUSIVE"
+      ],
+      "UPDATE": [
+        "EXCLUSIVE",
+        "UPDATE"
+      ],
+      "DELETE": [
+        "EXCLUSIVE"
+      ],
+      "CREATE": [
+        "EXCLUSIVE"
+      ],
+      "DROP": [
+        "EXCLUSIVE"
+      ],
+      "ALTER": [
+        "EXCLUSIVE"
+      ]
+    }
+  },
+  "deadlock": {
+    "max_cycle_length": 10,
+    "severity_rules": {
+      "HIGH": {
+        "min_nodes": 3,
+        "exclusive_locks": 2
+      },
+      "MEDIUM": {
+        "min_nodes": 2,
+        "exclusive_locks": 1
+      },
+      "LOW": {
+        "min_nodes": 2,
+        "exclusive_locks": 0
+      }
+    },
+    "resource_conflict_types": [
+      "TABLE",
+      "INDEX",
+      "SCHEMA"
+    ]
+  },
+  "output": {
+    "report_format": "json",
+    "output_directory": "reports",
+    "include_sql_analysis": true,
+    "include_execution_paths": true
+  },
+  "log_level": "INFO"
+}

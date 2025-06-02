@@ -1,0 +1,110 @@
+{
+    "export_summary": {
+        "total_nodes_with_deadlock_properties": 2,
+        "deadlock_cycles_detected": 1,
+        "export_timestamp": "2025-05-31 02:32:32.314760",
+        "detection_method": "BPMN Flow Analysis (AND_SPLIT only)",
+        "approach": "Properties Added to Existing Nodes - No New Nodes/Relationships/Labels Created"
+    },
+    "nodes_with_deadlock_properties": [
+        {
+            "node_id": "9eb40046-d470-4044-a3ee-8556325b7184",
+            "name": "Complete Purchase Order",
+            "sql": "UPDATE PurchaseOrdersSET Status = 'Completed', CompletedDate = GETDATE()WHERE POID = @poID",
+            "severity": "MEDIUM",
+            "cycle_id": 1,
+            "resources": [
+                "PurchaseOrders"
+            ],
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "wait_for": [
+                "Generate PO Request"
+            ],
+            "deadlock_info": "{\"detected\": true, \"severity\": \"MEDIUM\", \"cycle_id\": 1, \"resources\": [\"PurchaseOrders\"], \"lock_types\": [\"EXCLUSIVE\"], \"wait_for\": [\"Generate PO Request\"], \"detection_method\": \"BPMN Flow Analysis\", \"description\": \"This node is involved in deadlock cycle 1 with severity MEDIUM\"}",
+            "description": "This node is involved in deadlock cycle 1 with severity MEDIUM. Conflicts on resources: PurchaseOrders",
+            "node_labels": [
+                "Task_Service"
+            ],
+            "time": "3.00",
+            "process_id": "784a15a4-3893-446c-b007-b812aca0e119",
+            "subtype": "Service",
+            "type": "Task"
+        },
+        {
+            "node_id": "dd74b104-3659-4379-9dfa-2b1464efc159",
+            "name": "Generate PO Request",
+            "sql": "INSERT INTO PurchaseOrders(POID, ReqID, VendorID, PODate, Status)VALUES (@poID, @reqID, @vendorID, GETDATE(), 'Draft')",
+            "severity": "MEDIUM",
+            "cycle_id": 1,
+            "resources": [
+                "PurchaseOrders"
+            ],
+            "lock_types": [
+                "EXCLUSIVE"
+            ],
+            "wait_for": [
+                "Complete Purchase Order"
+            ],
+            "deadlock_info": "{\"detected\": true, \"severity\": \"MEDIUM\", \"cycle_id\": 1, \"resources\": [\"PurchaseOrders\"], \"lock_types\": [\"EXCLUSIVE\"], \"wait_for\": [\"Complete Purchase Order\"], \"detection_method\": \"BPMN Flow Analysis\", \"description\": \"This node is involved in deadlock cycle 1 with severity MEDIUM\"}",
+            "description": "This node is involved in deadlock cycle 1 with severity MEDIUM. Conflicts on resources: PurchaseOrders",
+            "node_labels": [
+                "Task_Service"
+            ],
+            "time": "8.00",
+            "process_id": "784a15a4-3893-446c-b007-b812aca0e119",
+            "subtype": "Service",
+            "type": "Task"
+        }
+    ],
+    "neo4j_queries": {
+        "view_nodes_with_deadlock": "MATCH (n) WHERE n.deadlock_detected = true RETURN n",
+        "view_deadlock_properties_only": "MATCH (n) WHERE n.deadlock IS NOT NULL RETURN n.id, n.name, n.deadlock_description, n.deadlock_severity",
+        "view_deadlock_cycles": "MATCH (n) WHERE n.deadlock_cycle_id IS NOT NULL RETURN n.deadlock_cycle_id, collect({id: n.id, name: n.name, description: n.deadlock_description, sql: substring(n.SQL, 0, 50)}) as nodes ORDER BY n.deadlock_cycle_id",
+        "clear_deadlock_properties": "MATCH (n) WHERE n.deadlock_detected IS NOT NULL REMOVE n.deadlock_detected, n.deadlock_severity, n.deadlock_cycle_id, n.deadlock_resources, n.deadlock_lock_types, n.deadlock_context, n.deadlock_wait_for, n.deadlock_detection_method, n.deadlock_detection_timestamp, n.deadlock, n.deadlock_description",
+        "count_nodes_with_deadlock": "MATCH (n) WHERE n.deadlock_detected = true RETURN count(n) as total"
+    },
+    "deadlock_statistics": {
+        "nodes_by_severity": {
+            "MEDIUM": 2
+        },
+        "resources_most_conflicted": {
+            "PurchaseOrders": 2
+        },
+        "cycles_summary": [
+            {
+                "cycle_id": 1,
+                "nodes_count": 2,
+                "nodes": [
+                    {
+                        "node_id": "9eb40046-d470-4044-a3ee-8556325b7184",
+                        "name": "Complete Purchase Order",
+                        "severity": "MEDIUM",
+                        "description": "This node is involved in deadlock cycle 1 with severity MEDIUM. Conflicts on resources: PurchaseOrders",
+                        "sql": "UPDATE PurchaseOrdersSET Status = 'Completed', CompletedDate = GETDATE()WHERE POID = @poID...",
+                        "original_properties": {
+                            "time": "3.00",
+                            "process_id": "784a15a4-3893-446c-b007-b812aca0e119",
+                            "subtype": "Service",
+                            "type": "Task"
+                        }
+                    },
+                    {
+                        "node_id": "dd74b104-3659-4379-9dfa-2b1464efc159",
+                        "name": "Generate PO Request",
+                        "severity": "MEDIUM",
+                        "description": "This node is involved in deadlock cycle 1 with severity MEDIUM. Conflicts on resources: PurchaseOrders",
+                        "sql": "INSERT INTO PurchaseOrders(POID, ReqID, VendorID, PODate, Status)VALUES (@poID, @reqID, @vendorID, G...",
+                        "original_properties": {
+                            "time": "8.00",
+                            "process_id": "784a15a4-3893-446c-b007-b812aca0e119",
+                            "subtype": "Service",
+                            "type": "Task"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

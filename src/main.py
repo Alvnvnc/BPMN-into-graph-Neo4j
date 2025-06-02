@@ -5,7 +5,7 @@ import logging
 from converter import XPDLToNeo4jConverter
 from config import load_config
 from deadlock_detector import DeadlockDetector
-from deadlock_saver import DeadlockSaver  # ⬅️ Pakai DeadlockSaver
+from deadlock_saver import DeadlockSaver  
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
