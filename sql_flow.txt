@@ -1,0 +1,180 @@
+-- =============================================================================
+-- BPMN SQL EXECUTION FLOW ANALYSIS
+-- Business Process ERP - Purchase Order Management
+-- =============================================================================
+
+-- 1. START PROCESS - Order Processing
+-- XOR Gateway: Process either Standard or Custom Order
+-- ============================================================
+
+-- Path 1A: Standard Order Processing
+UPDATE Orders 
+SET Status = 'Processing' 
+WHERE OrderID = @orderID AND OrderType = 'Standard';
+
+-- Path 1B: Custom Order Processing  
+UPDATE Orders 
+SET Status = 'Processing', CustomRequirements = @requirements
+WHERE OrderID = @orderID AND OrderType = 'Custom';
+
+-- 2. CREATE PURCHASE REQUISITION (After XOR Join)
+-- ============================================================
+INSERT INTO PurchaseRequisitions(ReqID, OrderID, RequestDate, Status, Department)
+VALUES (@reqID, @orderID, GETDATE(), 'New', 'Procurement');
+
+-- 3. PARALLEL EXECUTION (AND Split) - Multiple processes run concurrently
+-- ============================================================
+
+-- Branch 3A: Generate PO Request
+INSERT INTO PurchaseOrders(POID, ReqID, VendorID, PODate, Status)
+VALUES (@poID, @reqID, @vendorID, GETDATE(), 'Draft');
+
+-- Branch 3B: Check Budget Availability (Long running - 300s)
+DECLARE @available DECIMAL(18,2);
+SELECT @available = RemainingBudget
+FROM DepartmentBudgets
+WHERE DepartmentID = @deptID AND FiscalYear = YEAR(GETDATE());
+
+IF @available >= @estimatedCost
+    UPDATE DepartmentBudgets
+    SET AllocatedAmount = AllocatedAmount + @estimatedCost,
+        RemainingBudget = RemainingBudget - @estimatedCost
+    WHERE DepartmentID = @deptID AND FiscalYear = YEAR(GETDATE());
+
+-- Branch 3C: Inventory Processing (XOR Split within parallel branch)
+BEGIN TRANSACTION;
+UPDATE Inventory 
+SET QuantityAvailable = QuantityAvailable - @orderQty, 
+    LastUpdated = GETDATE() 
+WHERE ItemID = @itemID;
+COMMIT;
+
+-- Sub-branch 3C1: Update Inventory Quantity
+UPDATE Inventory 
+SET QuantityAvailable = QuantityAvailable - @additionalQty, 
+    LastUpdated = GETDATE() 
+WHERE ItemID = @itemID;
+
+-- Sub-branch 3C2: Update Inventory Order Status
+UPDATE OrderDetails 
+SET InventoryStatus = 'Reserved' 
+WHERE OrderDetailID = @orderDetailID AND ItemID = @itemID;
+
+-- Inventory Finalization (AND Join of sub-branches)
+UPDATE Inventory 
+SET Status = 'Processed', LastProcessedTime = GETDATE() 
+WHERE ItemID = @itemID;
+
+-- 4. REVIEW AND APPROVAL PROCESS (OR Join)
+-- ============================================================
+SELECT po.*, v.VendorName, v.ContactPerson
+FROM PurchaseOrders po
+JOIN Vendors v ON po.VendorID = v.VendorID
+WHERE po.POID = @poID;
+
+-- System Compatibility Check
+SELECT i.ItemID, i.ItemName, i.CompatibilityFlags,
+       s.SystemID, s.SystemName, s.Version
+FROM Inventory i
+JOIN Systems s ON i.SystemID = s.SystemID
+WHERE i.ItemID IN (SELECT ItemID FROM OrderDetails WHERE OrderID = @orderID);
+
+-- 5. APPROVAL DECISION (XOR Split)
+-- ============================================================
+-- If approved:
+UPDATE PurchaseOrders
+SET Status = 'Approved', ApprovedBy = @userID, ApprovalDate = GETDATE()
+WHERE POID = @poID;
+
+-- Financial Validation
+INSERT INTO FinancialValidations(ValidationID, POID, ValidatedBy, ValidationDate, Comments)
+VALUES (@validationID, @poID, @userID, GETDATE(), @comments);
+
+-- 6. FINAL PARALLEL EXECUTION (AND Split after Financial Validation)
+-- ============================================================
+-- ** DEADLOCK PRONE AREA **
+
+-- Branch 6A: Purchase Order Completion Path
+UPDATE PurchaseOrders
+SET Status = 'Completed', CompletedDate = GETDATE()
+WHERE POID = @poID;
+
+-- Vendor Notification
+INSERT INTO VendorNotifications(NotificationID, VendorID, POID, NotificationDate, NotificationType)
+VALUES (@notificationID, @vendorID, @poID, GETDATE(), 'PO_Completion');
+
+-- Customer Order Status Update
+UPDATE Orders
+SET Status = 'Fulfilled', FulfillmentDate = GETDATE()
+WHERE OrderID = @orderID;
+
+-- Financial Transaction Recording
+INSERT INTO FinancialTransactions(TransactionID, POID, OrderID, Amount, TransactionDate, TransactionType)
+VALUES (@transactionID, @poID, @orderID, @amount, GETDATE(), 'Order_Fulfillment');
+
+-- Branch 6B: Integration Process Path
+-- Start Integration Process (No SQL - just trigger)
+
+-- Prepare for Integration
+UPDATE IntegrationLogs
+SET PreparationComplete = 1, PreparedBy = @userID
+WHERE LogID = @logID;
+
+-- Integration Paths (OR Split)
+-- Path A Integration
+EXEC sp_IntegrateSystemA @logID, @processID;
+
+-- Path B Integration  
+EXEC sp_IntegrateSystemB @logID, @processID;
+
+-- 7. PROCESS END (AND Join)
+-- ============================================================
+-- Both parallel branches must complete before process ends
+
+-- =============================================================================
+-- DEADLOCK ANALYSIS
+-- =============================================================================
+/*
+POTENTIAL DEADLOCK SCENARIOS:
+
+1. Record Financial Transaction ↔ Prepare for Integration
+   - Both access database concurrently
+   - Different lock orders on shared resources
+   
+2. Update Customer Order Status ↔ Prepare for Integration  
+   - Orders table vs IntegrationLogs table conflicts
+   - Cross-department resource contention
+   
+3. Notify Vendors ↔ Prepare for Integration
+   - VendorNotifications vs IntegrationLogs
+   - Concurrent insert operations
+   
+4. Complete Purchase Order ↔ Prepare for Integration
+   - PurchaseOrders vs IntegrationLogs
+   - Status update conflicts
+
+DEADLOCK RESOLUTION STRATEGIES:
+- Implement consistent lock ordering
+- Use timeout mechanisms
+- Add retry logic
+- Consider transaction isolation levels
+*/
+
+-- =============================================================================
+-- EXECUTION TIMING ANALYSIS
+-- =============================================================================
+/*
+CRITICAL PATH TIMING:
+- Process Standard/Custom Order: 5-10s
+- Create Purchase Requisition: 5s  
+- Check Budget Availability: 300s (BOTTLENECK)
+- Generate PO Request: 8s
+- Review Purchase Details: 10s
+- Verify System Compatibility: 15s
+- Approve Purchase Order: 10s
+- Complete Purchase Order: 3s
+- Integration Processes: 5-8s
+
+TOTAL ESTIMATED TIME: ~370+ seconds
+PARALLELIZATION BENEFIT: Reduces to ~315 seconds with proper parallel execution
+*/
