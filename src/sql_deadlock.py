@@ -400,7 +400,9 @@ class SQLDeadlockDetector:
             join_node = pair['join_node']
             split_type = pair['split_type']
             join_type = pair['join_type']
-            path_info = pair['path_info']
+            
+            # Analyze path between split and join
+            path_info = self._analyze_split_join_path(pair.get('split_id', ''), pair.get('join_id', ''))
             
             # Check if combination is problematic
             combination = (split_type, join_type)
@@ -711,13 +713,6 @@ class SQLDeadlockDetector:
                         sql_tasks.append(self.sql_resources[current_id]['name'])
                 elif 'Gateway' in labels:
                     gateways_count += 1
-            
-            # Find next nodes
-            for rel in self.graph_data['relationships']:
-                if rel['source_id'] == current_id:
-                    target_id = rel['target_id']
-                    if target_id not in visited:
-                        queue.append(target_id)
         
         return {
             'tasks_count': tasks_count,
@@ -1117,15 +1112,23 @@ def main():
             print("-" * 60)
             for i, deadlock in enumerate(report['structural_deadlocks'], 1):
                 print(f"\n[{i}] {deadlock['type']} - {deadlock['severity']}")
-                print(f"    Split Gateway: {deadlock['split_node']} ({deadlock['split_type']})")
-                print(f"    Join Gateway: {deadlock['join_node']} ({deadlock['join_type']})")
-                print(f"    Description: {deadlock['description']}")
-                print(f"    Recommendation: {deadlock['recommendation']}")
-                if 'path_info' in deadlock:
-                    path = deadlock['path_info']
-                    print(f"    Path Info: {path['tasks_count']} tasks, {path['gateways_count']} gateways")
-                    if path['sql_tasks']:
-                        print(f"    SQL Tasks: {', '.join(path['sql_tasks'])}")
+                print(f"    Split Gateway: {deadlock.get('split_node', 'N/A')} ({deadlock.get('split_type', 'N/A')})")
+                print(f"    Join Gateway: {deadlock.get('join_node', 'N/A')} ({deadlock.get('join_type', 'N/A')})")
+                print(f"    Description: {deadlock.get('description', 'N/A')}")
+                print(f"    Recommendation: {deadlock.get('recommendation', 'N/A')}")
+                
+                # Safe access to path_info
+                path_info = deadlock.get('path_info', {})
+                if path_info:
+                    tasks_count = path_info.get('tasks_count', 0)
+                    gateways_count = path_info.get('gateways_count', 0)
+                    sql_tasks = path_info.get('sql_tasks', [])
+                    
+                    print(f"    Path Info: {tasks_count} tasks, {gateways_count} gateways")
+                    if sql_tasks:
+                        print(f"    SQL Tasks: {', '.join(sql_tasks)}")
+                else:
+                    print(f"    Path Info: Not available")
         
         # Print SQL resource deadlocks
         if report['sql_resource_deadlocks']:
