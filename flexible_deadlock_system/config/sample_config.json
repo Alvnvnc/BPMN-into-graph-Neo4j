@@ -1,0 +1,21 @@
+{
+  "strategies": ["parallel", "resource", "gateway"],
+  "thresholds": {
+    "min_confidence": 0.6,
+    "min_severity": "MEDIUM",
+    "max_parallel_paths": 5,
+    "resource_contention_threshold": 3
+  },
+  "detection_options": {
+    "analyze_sql_conflicts": true,
+    "check_resource_locks": true,
+    "detect_circular_dependencies": true,
+    "analyze_gateway_patterns": true,
+    "timeout_detection": false
+  },
+  "performance": {
+    "max_nodes_per_batch": 1000,
+    "enable_caching": true,
+    "parallel_processing": false
+  }
+}

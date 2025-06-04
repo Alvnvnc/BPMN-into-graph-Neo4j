@@ -1,0 +1,17 @@
+# Core dependencies for the Flexible SQL Deadlock Detection System
+networkx>=3.0
+sqlparse>=0.4.4
+
+# Optional dependencies for enhanced functionality
+psutil>=5.9.0        # For system information logging
+neo4j>=5.0.0         # For Neo4j integration (optional)
+
+# Development and testing dependencies (optional)
+pytest>=7.0.0        # For running tests
+pytest-cov>=4.0.0    # For coverage reports
+black>=23.0.0        # For code formatting
+flake8>=5.0.0        # For linting
+
+# Documentation dependencies (optional)
+sphinx>=5.0.0        # For generating documentation
+sphinx-rtd-theme>=1.0.0  # For documentation theme

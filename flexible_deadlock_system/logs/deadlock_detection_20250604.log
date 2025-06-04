@@ -1,0 +1,683 @@
+2025-06-04 18:53:23,990 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in input validation: Configuration must contain 'strategies' field
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 86, in detect_deadlocks
+    validate_all_inputs(
+    ~~~~~~~~~~~~~~~~~~~^
+        sql_queries=sql_queries,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        config=self.config.__dict__
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 350, in validate_all_inputs
+    InputValidator.validate_detection_config(config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 160, in validate_detection_config
+    raise ValidationError("Configuration must contain 'strategies' field")
+utils.validator.ValidationError: Configuration must contain 'strategies' field
+2025-06-04 18:53:49,158 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in input validation: Configuration must contain 'enabled_strategies' field
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 86, in detect_deadlocks
+    validate_all_inputs(
+    ~~~~~~~~~~~~~~~~~~~^
+        sql_queries=sql_queries,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        config=self.config.__dict__
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 350, in validate_all_inputs
+    InputValidator.validate_detection_config(config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 160, in validate_detection_config
+    raise ValidationError("Configuration must contain 'enabled_strategies' field")
+utils.validator.ValidationError: Configuration must contain 'enabled_strategies' field
+2025-06-04 18:54:10,216 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 18:54:10,216 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in deadlock detection: 'DetectionConfig' object has no attribute 'strategies'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 96, in detect_deadlocks
+    for strategy_name in self.config.strategies:
+                         ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DetectionConfig' object has no attribute 'strategies'
+2025-06-04 18:54:49,249 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 18:54:49,249 - DeadlockDetectionSystem - WARNING - logger.py:102 - Strategy 'parallel_execution' not found in registry
+2025-06-04 18:54:49,249 - DeadlockDetectionSystem - WARNING - logger.py:102 - Strategy 'resource_contention' not found in registry
+2025-06-04 18:54:49,249 - DeadlockDetectionSystem - WARNING - logger.py:102 - Strategy 'gateway_specific' not found in registry
+2025-06-04 18:54:49,249 - DeadlockDetectionSystem - INFO - test_system.py:134 - Detection completed in 0.000s. Found 0 unique deadlocks
+2025-06-04 18:55:14,705 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 18:55:14,705 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in executing strategy 'parallel_execution': 'ParallelExecutionStrategy' object has no attribute 'detect_deadlocks'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 106, in detect_deadlocks
+    results = strategy.detect_deadlocks(nodes, edges, sql_queries)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ParallelExecutionStrategy' object has no attribute 'detect_deadlocks'
+2025-06-04 18:55:14,705 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in executing strategy 'resource_contention': 'ResourceContentionStrategy' object has no attribute 'detect_deadlocks'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 106, in detect_deadlocks
+    results = strategy.detect_deadlocks(nodes, edges, sql_queries)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ResourceContentionStrategy' object has no attribute 'detect_deadlocks'
+2025-06-04 18:55:14,706 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in executing strategy 'gateway_specific': 'GatewaySpecificStrategy' object has no attribute 'detect_deadlocks'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 106, in detect_deadlocks
+    results = strategy.detect_deadlocks(nodes, edges, sql_queries)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GatewaySpecificStrategy' object has no attribute 'detect_deadlocks'
+2025-06-04 18:55:14,706 - DeadlockDetectionSystem - INFO - test_system.py:134 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 18:55:51,247 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 18:55:51,248 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in executing strategy 'parallel_execution': 'DetectionConfig' object has no attribute 'thresholds'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 116, in detect_deadlocks
+    filtered_results = self._filter_by_severity(results)
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 157, in _filter_by_severity
+    if not self.config.thresholds.get('min_severity'):
+           ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DetectionConfig' object has no attribute 'thresholds'
+2025-06-04 18:55:51,249 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in executing strategy 'resource_contention': 'DetectionConfig' object has no attribute 'thresholds'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 116, in detect_deadlocks
+    filtered_results = self._filter_by_severity(results)
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 157, in _filter_by_severity
+    if not self.config.thresholds.get('min_severity'):
+           ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DetectionConfig' object has no attribute 'thresholds'
+2025-06-04 18:55:51,249 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in executing strategy 'gateway_specific': 'DetectionConfig' object has no attribute 'thresholds'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 116, in detect_deadlocks
+    filtered_results = self._filter_by_severity(results)
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/test_system.py", line 157, in _filter_by_severity
+    if not self.config.thresholds.get('min_severity'):
+           ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DetectionConfig' object has no attribute 'thresholds'
+2025-06-04 18:55:51,250 - DeadlockDetectionSystem - INFO - test_system.py:141 - Detection completed in 0.002s. Found 0 unique deadlocks
+2025-06-04 18:57:31,098 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 18:57:31,098 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'parallel_execution' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 18:57:31,098 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 18:57:31,098 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'gateway_specific' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 18:57:31,098 - DeadlockDetectionSystem - INFO - test_system.py:141 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 19:01:45,340 - ComprehensiveTest - ERROR - logger.py:98 - Error occurred in testing scenario 'Parallel Gateway with Shared Resource Access': Node data must contain 'type' field
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/comprehensive_test.py", line 167, in run_detection_test
+    validate_all_inputs(
+    ~~~~~~~~~~~~~~~~~~~^
+        sql_queries=graph_data['sql_queries'],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        config=self.config.config
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 347, in validate_all_inputs
+    InputValidator.validate_graph_structure(nodes, edges)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 122, in validate_graph_structure
+    InputValidator.validate_node_data(node)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 85, in validate_node_data
+    raise ValidationError(f"Node data must contain '{field}' field")
+utils.validator.ValidationError: Node data must contain 'type' field
+2025-06-04 19:01:45,341 - ComprehensiveTest - ERROR - logger.py:98 - Error occurred in testing scenario 'Resource Contention with Circular Dependencies': Node data must contain 'type' field
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/comprehensive_test.py", line 167, in run_detection_test
+    validate_all_inputs(
+    ~~~~~~~~~~~~~~~~~~~^
+        sql_queries=graph_data['sql_queries'],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        config=self.config.config
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 347, in validate_all_inputs
+    InputValidator.validate_graph_structure(nodes, edges)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 122, in validate_graph_structure
+    InputValidator.validate_node_data(node)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 85, in validate_node_data
+    raise ValidationError(f"Node data must contain '{field}' field")
+utils.validator.ValidationError: Node data must contain 'type' field
+2025-06-04 19:01:45,342 - ComprehensiveTest - ERROR - logger.py:98 - Error occurred in testing scenario 'Complex Multi-Gateway with Resource Conflicts': Node data must contain 'type' field
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/comprehensive_test.py", line 167, in run_detection_test
+    validate_all_inputs(
+    ~~~~~~~~~~~~~~~~~~~^
+        sql_queries=graph_data['sql_queries'],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        config=self.config.config
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 347, in validate_all_inputs
+    InputValidator.validate_graph_structure(nodes, edges)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 122, in validate_graph_structure
+    InputValidator.validate_node_data(node)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 85, in validate_node_data
+    raise ValidationError(f"Node data must contain '{field}' field")
+utils.validator.ValidationError: Node data must contain 'type' field
+2025-06-04 19:16:32,513 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in input validation: Configuration must contain 'enabled_strategies' field
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 93, in detect_deadlocks
+    validate_all_inputs(
+    ~~~~~~~~~~~~~~~~~~~^
+        sql_queries=sql_queries,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        config=self.config.__dict__
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 353, in validate_all_inputs
+    InputValidator.validate_detection_config(config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 163, in validate_detection_config
+    raise ValidationError("Configuration must contain 'enabled_strategies' field")
+utils.validator.ValidationError: Configuration must contain 'enabled_strategies' field
+2025-06-04 19:18:18,799 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:18:18,799 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'parallel_execution' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:18:18,799 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:18:18,799 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'gateway_specific' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:18:18,799 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.000s. Found 0 unique deadlocks
+2025-06-04 19:19:19,158 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:19:19,158 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'parallel_execution' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,159 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,159 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'gateway_specific' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,159 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 19:19:19,159 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:19:19,159 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'parallel_execution' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,159 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,159 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.000s. Found 0 unique deadlocks
+2025-06-04 19:19:19,160 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:19:19,160 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'parallel_execution' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,160 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,160 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'gateway_specific' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,160 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 19:19:19,160 - DeadlockDetectionSystem - INFO - main.py:221 - Results saved to sample_deadlock_results.json
+2025-06-04 19:19:19,161 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:19:19,161 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'parallel_execution' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,161 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,161 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'gateway_specific' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,161 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 19:19:19,162 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:19:19,162 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'parallel_execution' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,162 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,162 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'gateway_specific' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,162 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 19:19:19,163 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:19:19,163 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'parallel_execution' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,163 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,163 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'gateway_specific' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:19:19,163 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 19:23:11,387 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:23:11,393 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'parallel_execution' completed in 0.006s (analyzed 8 nodes)
+2025-06-04 19:23:11,393 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in executing strategy 'parallel_execution': 'DeadlockResult' object has no attribute 'description'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 75, in log_detection_result
+    f"{emoji} Deadlock detected: {result.description} "
+                                  ^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'description'
+2025-06-04 19:23:11,395 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:23:11,395 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in executing strategy 'resource_contention': 'DeadlockResult' object has no attribute 'description'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 75, in log_detection_result
+    f"{emoji} Deadlock detected: {result.description} "
+                                  ^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'description'
+2025-06-04 19:23:11,398 - DeadlockDetectionSystem - INFO - logger.py:90 - Strategy 'gateway_specific' completed in 0.002s (analyzed 8 nodes)
+2025-06-04 19:23:11,398 - DeadlockDetectionSystem - ERROR - logger.py:98 - Error occurred in executing strategy 'gateway_specific': 'DeadlockResult' object has no attribute 'description'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 75, in log_detection_result
+    f"{emoji} Deadlock detected: {result.description} "
+                                  ^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'description'
+2025-06-04 19:23:11,399 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.012s. Found 7 unique deadlocks
+2025-06-04 19:24:17,041 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:24:17,047 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.005s (analyzed 8 nodes)
+2025-06-04 19:24:17,047 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:24:17,047 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:24:17,047 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in executing strategy 'parallel_execution': 'DeadlockResult' object has no attribute 'confidence_score'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 85, in log_detection_result
+    if result.confidence_score:
+       ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'confidence_score'
+2025-06-04 19:24:17,048 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:24:17,048 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Process Payment [Severity: CRITICAL]
+2025-06-04 19:24:17,048 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders
+2025-06-04 19:24:17,048 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in executing strategy 'resource_contention': 'DeadlockResult' object has no attribute 'confidence_score'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 85, in log_detection_result
+    if result.confidence_score:
+       ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'confidence_score'
+2025-06-04 19:24:17,049 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:24:17,049 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:24:17,049 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:24:17,049 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in executing strategy 'gateway_specific': 'DeadlockResult' object has no attribute 'confidence_score'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 85, in log_detection_result
+    if result.confidence_score:
+       ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'confidence_score'
+2025-06-04 19:24:17,049 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.008s. Found 7 unique deadlocks
+2025-06-04 19:24:17,050 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:24:17,051 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:24:17,051 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:24:17,051 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:24:17,051 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in executing strategy 'parallel_execution': 'DeadlockResult' object has no attribute 'confidence_score'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 85, in log_detection_result
+    if result.confidence_score:
+       ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'confidence_score'
+2025-06-04 19:24:17,051 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:24:17,051 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Process Payment [Severity: CRITICAL]
+2025-06-04 19:24:17,051 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders
+2025-06-04 19:24:17,051 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in executing strategy 'resource_contention': 'DeadlockResult' object has no attribute 'confidence_score'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 85, in log_detection_result
+    if result.confidence_score:
+       ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'confidence_score'
+2025-06-04 19:24:17,052 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.002s. Found 5 unique deadlocks
+2025-06-04 19:24:17,052 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:24:17,053 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:24:17,053 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:24:17,053 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:24:17,053 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in executing strategy 'parallel_execution': 'DeadlockResult' object has no attribute 'confidence_score'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 85, in log_detection_result
+    if result.confidence_score:
+       ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'confidence_score'
+2025-06-04 19:24:17,053 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:24:17,053 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Process Payment [Severity: CRITICAL]
+2025-06-04 19:24:17,053 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders
+2025-06-04 19:24:17,053 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in executing strategy 'resource_contention': 'DeadlockResult' object has no attribute 'confidence_score'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 85, in log_detection_result
+    if result.confidence_score:
+       ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'confidence_score'
+2025-06-04 19:24:17,055 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:24:17,055 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:24:17,055 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:24:17,055 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in executing strategy 'gateway_specific': 'DeadlockResult' object has no attribute 'confidence_score'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 134, in detect_deadlocks
+    self.logger.log_detection_result(result)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/logger.py", line 85, in log_detection_result
+    if result.confidence_score:
+       ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'confidence_score'
+2025-06-04 19:24:17,055 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.003s. Found 7 unique deadlocks
+2025-06-04 19:24:17,055 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in saving results to sample_deadlock_results.json: 'DeadlockResult' object has no attribute 'description'
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 208, in save_results
+    'description': result.description,
+                   ^^^^^^^^^^^^^^^^^^
+AttributeError: 'DeadlockResult' object has no attribute 'description'
+2025-06-04 19:28:45,122 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.004s (analyzed 8 nodes)
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,126 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Process Payment [Severity: CRITICAL]
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Payment and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,127 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,128 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,129 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,129 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,129 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,129 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.007s. Found 7 unique deadlocks
+2025-06-04 19:28:45,129 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,130 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Process Payment [Severity: CRITICAL]
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Payment and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.002s. Found 5 unique deadlocks
+2025-06-04 19:28:45,131 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:28:45,132 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,132 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,132 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,132 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,132 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,132 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,132 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,132 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,132 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Process Payment [Severity: CRITICAL]
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Payment and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,133 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,134 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.003s. Found 7 unique deadlocks
+2025-06-04 19:28:45,135 - DeadlockDetectionSystem - INFO - main.py:228 - Results saved to sample_deadlock_results.json
+2025-06-04 19:28:45,135 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Process Payment [Severity: CRITICAL]
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,136 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Payment and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,137 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,138 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,138 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,138 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,138 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,138 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.003s. Found 7 unique deadlocks
+2025-06-04 19:28:45,138 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:28:45,138 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,138 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,138 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: parallel_execution between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Process Payment [Severity: CRITICAL]
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Payment and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,139 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Order and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,140 - DeadlockDetectionSystem - INFO - logger.py:77 - 🟠 Deadlock detected: convergent_and_join between Process Payment and Update Order Status [Severity: MEDIUM]
+2025-06-04 19:28:45,141 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,141 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 70.00%
+2025-06-04 19:28:45,141 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.003s. Found 7 unique deadlocks
+2025-06-04 19:28:45,141 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:28:45,141 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Process Payment [Severity: CRITICAL]
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Order and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between Process Payment and Update Order Status [Severity: CRITICAL]
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:28:45,142 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:28:45,143 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 19:28:45,143 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.002s. Found 3 unique deadlocks
+2025-06-04 19:29:43,572 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in input validation: Nodes and edges must be lists
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 93, in detect_deadlocks
+    validate_all_inputs(
+    ~~~~~~~~~~~~~~~~~~~^
+        sql_queries=sql_queries,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        config=self.config.config
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 350, in validate_all_inputs
+    InputValidator.validate_graph_structure(nodes, edges)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 117, in validate_graph_structure
+    raise ValidationError("Nodes and edges must be lists")
+utils.validator.ValidationError: Nodes and edges must be lists
+2025-06-04 19:31:05,230 - DeadlockDetectionSystem - ERROR - logger.py:101 - Error occurred in input validation: Each edge must have 'source' and 'target' fields
+Traceback (most recent call last):
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/main.py", line 93, in detect_deadlocks
+    validate_all_inputs(
+    ~~~~~~~~~~~~~~~~~~~^
+        sql_queries=sql_queries,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        config=self.config.config
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 350, in validate_all_inputs
+    InputValidator.validate_graph_structure(nodes, edges)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/alvn/Documents/important/Audit sistem/jurnal/BPMN-into-graph-Neo4j/flexible_deadlock_system/utils/validator.py", line 134, in validate_graph_structure
+    raise ValidationError("Each edge must have 'source' and 'target' fields")
+utils.validator.ValidationError: Each edge must have 'source' and 'target' fields
+2025-06-04 19:31:30,743 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 19:31:30,747 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.004s (analyzed 8 nodes)
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_a and task_b [Severity: CRITICAL]
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_a and task_d [Severity: CRITICAL]
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status, column:id
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_b and task_d [Severity: CRITICAL]
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 19:31:30,748 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 19:31:30,751 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.002s (analyzed 8 nodes)
+2025-06-04 19:31:30,751 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.008s. Found 3 unique deadlocks
+2025-06-04 20:12:24,458 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.004s (analyzed 8 nodes)
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_a and task_b [Severity: CRITICAL]
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_a and task_d [Severity: CRITICAL]
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status, column:id
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_b and task_d [Severity: CRITICAL]
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 20:12:24,463 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 20:12:24,465 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.002s (analyzed 8 nodes)
+2025-06-04 20:12:24,465 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.007s. Found 3 unique deadlocks
+2025-06-04 20:12:55,210 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 20:12:55,215 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.004s (analyzed 8 nodes)
+2025-06-04 20:12:55,215 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 20:12:55,215 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_a and task_b [Severity: CRITICAL]
+2025-06-04 20:12:55,215 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 20:12:55,215 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 20:12:55,216 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_a and task_d [Severity: CRITICAL]
+2025-06-04 20:12:55,216 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:status, column:id
+2025-06-04 20:12:55,216 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 20:12:55,216 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_b and task_d [Severity: CRITICAL]
+2025-06-04 20:12:55,216 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 20:12:55,216 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 20:12:55,217 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 20:12:55,217 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.006s. Found 3 unique deadlocks
+2025-06-04 20:13:20,209 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 20:13:20,214 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.005s (analyzed 8 nodes)
+2025-06-04 20:13:20,214 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 8 nodes)
+2025-06-04 20:13:20,215 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_a and task_b [Severity: CRITICAL]
+2025-06-04 20:13:20,215 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 20:13:20,215 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 20:13:20,215 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_a and task_d [Severity: CRITICAL]
+2025-06-04 20:13:20,215 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id, column:status
+2025-06-04 20:13:20,215 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 20:13:20,215 - DeadlockDetectionSystem - INFO - logger.py:77 - 💀 Deadlock detected: resource_contention_write_write between task_b and task_d [Severity: CRITICAL]
+2025-06-04 20:13:20,215 - DeadlockDetectionSystem - INFO - logger.py:83 - Shared resources: orders, column:id
+2025-06-04 20:13:20,215 - DeadlockDetectionSystem - INFO - logger.py:86 - Confidence: 100.00%
+2025-06-04 20:13:20,216 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 8 nodes)
+2025-06-04 20:13:20,216 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.007s. Found 3 unique deadlocks
+2025-06-04 20:13:20,216 - DeadlockDetectionSystem - INFO - main.py:228 - Results saved to test_output.json
+2025-06-04 21:20:00,038 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 21:20:00,038 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.000s (analyzed 15 nodes)
+2025-06-04 21:20:00,038 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 15 nodes)
+2025-06-04 21:20:00,039 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'timeout' completed in 0.000s (analyzed 15 nodes)
+2025-06-04 21:20:00,039 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 21:20:00,039 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 21:20:00,039 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.000s (analyzed 4 nodes)
+2025-06-04 21:20:00,039 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 4 nodes)
+2025-06-04 21:20:00,040 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.000s (analyzed 4 nodes)
+2025-06-04 21:20:00,040 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 21:20:00,040 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 21:20:00,040 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.000s (analyzed 15 nodes)
+2025-06-04 21:20:00,040 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 15 nodes)
+2025-06-04 21:20:00,040 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.000s (analyzed 15 nodes)
+2025-06-04 21:20:00,040 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 21:20:00,041 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 21:20:00,041 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.000s (analyzed 6 nodes)
+2025-06-04 21:20:00,041 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 6 nodes)
+2025-06-04 21:20:00,041 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.000s (analyzed 6 nodes)
+2025-06-04 21:20:00,041 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 21:20:00,042 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 21:20:00,042 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.000s (analyzed 100 nodes)
+2025-06-04 21:20:00,043 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 100 nodes)
+2025-06-04 21:20:00,043 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.001s (analyzed 100 nodes)
+2025-06-04 21:20:00,043 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.002s. Found 0 unique deadlocks
+2025-06-04 21:20:00,044 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 21:20:00,044 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.000s (analyzed 100 nodes)
+2025-06-04 21:20:00,044 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 21:20:00,044 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 21:20:00,045 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.000s (analyzed 100 nodes)
+2025-06-04 21:20:00,045 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 100 nodes)
+2025-06-04 21:20:00,045 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.000s (analyzed 100 nodes)
+2025-06-04 21:20:00,045 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
+2025-06-04 21:20:00,046 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 21:20:00,046 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.000s (analyzed 3 nodes)
+2025-06-04 21:20:00,046 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 3 nodes)
+2025-06-04 21:20:00,046 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.000s (analyzed 3 nodes)
+2025-06-04 21:20:00,046 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.000s. Found 0 unique deadlocks
+2025-06-04 23:17:42,570 - DeadlockDetectionSystem - INFO - logger.py:60 - Starting deadlock detection with strategy: Multi-Strategy
+2025-06-04 23:17:42,571 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'parallel_execution' completed in 0.000s (analyzed 3 nodes)
+2025-06-04 23:17:42,571 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'resource_contention' completed in 0.000s (analyzed 3 nodes)
+2025-06-04 23:17:42,571 - DeadlockDetectionSystem - INFO - logger.py:93 - Strategy 'gateway_specific' completed in 0.000s (analyzed 3 nodes)
+2025-06-04 23:17:42,571 - DeadlockDetectionSystem - INFO - main.py:149 - Detection completed in 0.001s. Found 0 unique deadlocks
