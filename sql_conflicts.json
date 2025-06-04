@@ -1,0 +1,66 @@
+{
+  "analysis_info": {
+    "timestamp": "2025-06-04T17:43:59.773158",
+    "total_conflicts_detected": 1,
+    "analyzer_version": "1.0"
+  },
+  "conflicts": [
+    {
+      "timestamp": "2025-06-04T17:43:59.773140",
+      "node1": {
+        "id": "4:0e3745dc-93f8-4a4b-91bc-fe02a5a23118:28",
+        "name": "Update Inventory Quantity",
+        "tables": [
+          "INVENTORY"
+        ],
+        "columns": [
+          "ITEMID",
+          "QUANTITYAVAILABLE"
+        ],
+        "operations": [
+          "UPDATE"
+        ]
+      },
+      "node2": {
+        "id": "4:0e3745dc-93f8-4a4b-91bc-fe02a5a23118:49",
+        "name": "Update Inventory Order Status",
+        "tables": [
+          "ORDERDETAILS"
+        ],
+        "columns": [
+          "ORDERDETAILID",
+          "ITEMID",
+          "INVENTORYSTATUS"
+        ],
+        "operations": [
+          "UPDATE"
+        ]
+      },
+      "conflict_details": {
+        "shared_tables": [],
+        "shared_columns": [
+          "ITEMID"
+        ],
+        "all_involved_tables": [
+          "ORDERDETAILS",
+          "INVENTORY"
+        ],
+        "operation_conflicts": [
+          [
+            "WRITE-WRITE-CROSS-TABLE",
+            [
+              "ORDERDETAILS",
+              "INVENTORY"
+            ]
+          ]
+        ],
+        "conflict_type": "CROSS-TABLE",
+        "shared_resources": [
+          "ITEMID"
+        ],
+        "gateway_type": "AND_SPLIT",
+        "validation_passed": true
+      }
+    }
+  ]
+}
