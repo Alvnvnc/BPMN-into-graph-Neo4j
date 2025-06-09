@@ -1,0 +1,699 @@
+{
+  "metadata": {
+    "generated_at": "2025-06-10T03:28:26.629928",
+    "timestamp": "20250610_032824",
+    "version": "2.0",
+    "analysis_tool": "SQL Deadlock Detector"
+  },
+  "summary": {
+    "total_sql_nodes": 20,
+    "total_parallel_scenarios": 6,
+    "deadlock_cycles_found": 1,
+    "total_conflicts": 1,
+    "critical_conflicts": 1,
+    "high_severity_conflicts": 0,
+    "medium_severity_conflicts": 0,
+    "low_severity_conflicts": 0,
+    "risk_level": "CRITICAL"
+  },
+  "deadlock_analysis": {
+    "deadlock_cycles": [
+      [
+        "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46",
+        "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30"
+      ]
+    ],
+    "deadlock_risks": [
+      {
+        "type": "DEADLOCK_CYCLE",
+        "nodes": [
+          "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46",
+          "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30"
+        ],
+        "node_names": [
+          "Update Inventory Order Status",
+          "Update Inventory Quantity"
+        ],
+        "cycle_length": 2
+      }
+    ],
+    "conflict_analysis": {
+      "severity_distribution": {
+        "LOW": 0,
+        "MEDIUM": 0,
+        "HIGH": 0,
+        "CRITICAL": 1
+      },
+      "conflict_type_distribution": {
+        "WRITE_WRITE_CROSS_TABLE": 1
+      },
+      "total_conflicts": 1,
+      "high_severity_conflicts": 1,
+      "critical_conflicts": 1,
+      "high_conflicts": 0,
+      "medium_conflicts": 0,
+      "low_conflicts": 0
+    },
+    "detected_conflicts": [
+      {
+        "node1_id": "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30",
+        "node2_id": "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46",
+        "node1_name": "Update Inventory Quantity",
+        "node2_name": "Update Inventory Order Status",
+        "conflict_type": "WRITE_WRITE_CROSS_TABLE",
+        "shared_tables": [],
+        "shared_columns": [
+          "ITEMID"
+        ],
+        "all_involved_tables": [
+          "ORDERDETAILS",
+          "INVENTORY"
+        ],
+        "operations1": [
+          "UPDATE"
+        ],
+        "operations2": [
+          "UPDATE"
+        ],
+        "is_mutually_exclusive": false,
+        "is_cross_table": true,
+        "severity": "CRITICAL",
+        "scenario_type": "AND_JOIN",
+        "scenario_id": "2a5b26ec-0f86-4367-b4e4-11bab697253d"
+      }
+    ],
+    "graph_statistics": {
+      "resource_graph": {
+        "nodes": 20,
+        "edges": 0,
+        "density": 0
+      },
+      "wait_for_graph": {
+        "nodes": 2,
+        "edges": 2,
+        "density": 1.0,
+        "is_strongly_connected": true
+      }
+    }
+  },
+  "parallel_scenarios": {
+    "total_scenarios": 6,
+    "scenario_types": {
+      "OR_SPLIT": 2,
+      "AND_SPLIT": 2,
+      "OR_JOIN": 1,
+      "AND_JOIN": 1
+    },
+    "total_paths": 14,
+    "scenarios": [
+      {
+        "analysis_type": "SPLIT_FORWARD",
+        "gateway_node_id": "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:42",
+        "gateway_type": "OR_SPLIT",
+        "gateway_name": "prepare for integration",
+        "paths": [
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:43"
+          ],
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:44"
+          ]
+        ],
+        "path_count": 2,
+        "is_truly_parallel": true
+      },
+      {
+        "analysis_type": "SPLIT_FORWARD",
+        "gateway_node_id": "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:45",
+        "gateway_type": "OR_SPLIT",
+        "gateway_name": "initiate inventory processing",
+        "paths": [
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30"
+          ],
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46"
+          ]
+        ],
+        "path_count": 2,
+        "is_truly_parallel": true
+      },
+      {
+        "analysis_type": "SPLIT_FORWARD",
+        "gateway_node_id": "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:35",
+        "gateway_type": "AND_SPLIT",
+        "gateway_name": "",
+        "paths": [
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:36",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:38",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:39",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40"
+          ],
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:42",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:43"
+          ]
+        ],
+        "path_count": 2,
+        "is_truly_parallel": true
+      },
+      {
+        "analysis_type": "SPLIT_FORWARD",
+        "gateway_node_id": "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:28",
+        "gateway_type": "AND_SPLIT",
+        "gateway_name": "",
+        "paths": [
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:32",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:33"
+          ],
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:32",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:33"
+          ],
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:45",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30"
+          ]
+        ],
+        "path_count": 3,
+        "is_truly_parallel": true
+      },
+      {
+        "analysis_type": "JOIN_BACKWARD",
+        "gateway_node_id": "bcf0cce2-df40-4c87-822b-17ce53163039",
+        "gateway_type": "OR_JOIN",
+        "gateway_name": "Inclusive",
+        "paths": [
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29"
+          ],
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31"
+          ],
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30",
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:47"
+          ]
+        ],
+        "path_count": 3,
+        "is_truly_parallel": true
+      },
+      {
+        "analysis_type": "JOIN_BACKWARD",
+        "gateway_node_id": "2a5b26ec-0f86-4367-b4e4-11bab697253d",
+        "gateway_type": "AND_JOIN",
+        "gateway_name": "Parallel",
+        "paths": [
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30"
+          ],
+          [
+            "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46"
+          ]
+        ],
+        "path_count": 2,
+        "is_truly_parallel": true
+      }
+    ]
+  },
+  "sql_resources": {
+    "total_sql_nodes": 20,
+    "operation_distribution": {
+      "UPDATE": 10,
+      "INSERT": 5,
+      "SELECT": 3
+    },
+    "table_usage": {
+      "ORDERS": 2,
+      "PURCHASEREQUISITIONS": 1,
+      "PURCHASEORDERS": 2,
+      "INVENTORY": 4,
+      "DEPARTMENTBUDGETSWHERE": 1,
+      "DEPARTMENTBUDGETSSET": 1,
+      "VENDORS": 1,
+      "ORDERDETAILS": 2,
+      "SYSTEMS": 1,
+      "PURCHASEORDERSSET": 2,
+      "FINANCIALVALIDATIONS": 1,
+      "VENDORNOTIFICATIONS": 1,
+      "ORDERSSET": 1,
+      "FINANCIALTRANSACTIONS": 1,
+      "INTEGRATIONLOGSSET": 1
+    },
+    "most_used_tables": [
+      [
+        "INVENTORY",
+        4
+      ],
+      [
+        "ORDERS",
+        2
+      ],
+      [
+        "PURCHASEORDERS",
+        2
+      ],
+      [
+        "ORDERDETAILS",
+        2
+      ],
+      [
+        "PURCHASEORDERSSET",
+        2
+      ]
+    ],
+    "nodes": {
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:27": {
+        "name": "Process Custom Order",
+        "sql": "UPDATE Orders SET Status = 'Processing',CustomRequirements = @requirementsWHERE OrderID = @orderID AND OrderType = 'Custom'",
+        "resources": {
+          "tables": "{'ORDERS'}",
+          "columns": "{'ORDERTYPE', 'ORDERID', 'STATUS'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "ORDERID",
+              "operator": "=",
+              "value": "@ORDERID",
+              "raw_condition": "ORDERID = '@ORDERID'"
+            },
+            {
+              "column": "ORDERTYPE",
+              "operator": "=",
+              "value": "CUSTOM",
+              "raw_condition": "ORDERTYPE = 'CUSTOM'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:28": {
+        "name": "Create Purchase Requisition",
+        "sql": "INSERT INTO PurchaseRequisitions(ReqID, OrderID, RequestDate, Status, Department)VALUES (@reqID, @orderID, GETDATE(), 'New', 'Procurement')",
+        "resources": {
+          "tables": "{'PURCHASEREQUISITIONS'}",
+          "columns": "set()",
+          "operations": "{'INSERT'}",
+          "where_conditions": []
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29": {
+        "name": "Generate PO Request",
+        "sql": "INSERT INTO PurchaseOrders(POID, ReqID, VendorID, PODate, Status)VALUES (@poID, @reqID, @vendorID, GETDATE(), 'Draft')",
+        "resources": {
+          "tables": "{'PURCHASEORDERS'}",
+          "columns": "set()",
+          "operations": "{'INSERT'}",
+          "where_conditions": []
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30": {
+        "name": "Update Inventory Quantity",
+        "sql": "UPDATE Inventory SET QuantityAvailable = QuantityAvailable - @additionalQty, LastUpdated = GETDATE() WHERE ItemID = @itemID;",
+        "resources": {
+          "tables": "{'INVENTORY'}",
+          "columns": "{'ITEMID', 'QUANTITYAVAILABLE'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "ITEMID",
+              "operator": "=",
+              "value": "@ITEMID;",
+              "raw_condition": "ITEMID = '@ITEMID;'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ],
+        "deadlock_message": "data query if parallel relation"
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31": {
+        "name": "Check Budget Availability",
+        "sql": "DECLARE @available DECIMAL(18,2);SELECT @available = RemainingBudgetFROM DepartmentBudgetsWHERE DepartmentID = @deptID AND FiscalYear = YEAR(GETDATE()); IF @available >= @estimatedCostUPDATE DepartmentBudgetsSET AllocatedAmount = AllocatedAmount + @estimatedCost,RemainingBudget = RemainingBudget - @estimatedCostWHERE DepartmentID = @deptID AND FiscalYear = YEAR(GETDATE());",
+        "resources": {
+          "tables": "{'DEPARTMENTBUDGETSWHERE', 'DEPARTMENTBUDGETSSET'}",
+          "columns": "{'FISCALYEAR', 'DEPARTMENTID', 'ALLOCATEDAMOUNT'}",
+          "operations": "{'SELECT'}",
+          "where_conditions": [
+            {
+              "column": "DEPARTMENTID",
+              "operator": "=",
+              "value": "@DEPTID",
+              "raw_condition": "DEPARTMENTID = '@DEPTID'"
+            },
+            {
+              "column": "FISCALYEAR",
+              "operator": "=",
+              "value": "YEAR(GETDATE());",
+              "raw_condition": "FISCALYEAR = 'YEAR(GETDATE());'"
+            },
+            {
+              "column": "DEPARTMENTID",
+              "operator": "=",
+              "value": "@DEPTID",
+              "raw_condition": "DEPARTMENTID = '@DEPTID'"
+            },
+            {
+              "column": "FISCALYEAR",
+              "operator": "=",
+              "value": "YEAR(GETDATE());",
+              "raw_condition": "FISCALYEAR = 'YEAR(GETDATE());'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:32": {
+        "name": "Review Purchase Details",
+        "sql": "SELECT po.*, v.VendorName, v.ContactPersonFROM PurchaseOrders poJOIN Vendors v ON po.VendorID = v.VendorIDWHERE po.POID = @poID",
+        "resources": {
+          "tables": "{'PURCHASEORDERS', 'VENDORS'}",
+          "columns": "{'POID'}",
+          "operations": "{'SELECT'}",
+          "where_conditions": [
+            {
+              "column": "POID",
+              "operator": "=",
+              "value": "@POID",
+              "raw_condition": "POID = '@POID'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:33": {
+        "name": "Verify System Compatibility",
+        "sql": "SELECT i.ItemID, i.ItemName, i.CompatibilityFlags,s.SystemID, s.SystemName, s.VersionFROM Inventory iJOIN Systems s ON i.SystemID = s.SystemIDWHERE i.ItemID IN (SELECT ItemID FROM OrderDetails WHERE OrderID = @orderID)",
+        "resources": {
+          "tables": "{'ORDERDETAILS', 'INVENTORY', 'SYSTEMS'}",
+          "columns": "{'ORDERID', 'ITEMID'}",
+          "operations": "{'SELECT'}",
+          "where_conditions": [
+            {
+              "column": "ORDERID",
+              "operator": "=",
+              "value": "@ORDERID)",
+              "raw_condition": "ORDERID = '@ORDERID)'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:34": {
+        "name": "Approve Purchase Order",
+        "sql": "UPDATE PurchaseOrdersSET Status = 'Approved', ApprovedBy = @userID, ApprovalDate = GETDATE()WHERE POID = @poID",
+        "resources": {
+          "tables": "{'PURCHASEORDERSSET'}",
+          "columns": "{'POID', 'STATUS'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "POID",
+              "operator": "=",
+              "value": "@POID",
+              "raw_condition": "POID = '@POID'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:35": {
+        "name": "Validate Financial Impact",
+        "sql": "INSERT INTO FinancialValidations(ValidationID, POID, ValidatedBy, ValidationDate, Comments)VALUES (@validationID, @poID, @userID, GETDATE(), @comments)",
+        "resources": {
+          "tables": "{'FINANCIALVALIDATIONS'}",
+          "columns": "set()",
+          "operations": "{'INSERT'}",
+          "where_conditions": []
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:36": {
+        "name": "Complete Purchase Order",
+        "sql": "UPDATE PurchaseOrdersSET Status = 'Completed', CompletedDate = GETDATE()WHERE POID = @poID",
+        "resources": {
+          "tables": "{'PURCHASEORDERSSET'}",
+          "columns": "{'POID', 'STATUS'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "POID",
+              "operator": "=",
+              "value": "@POID",
+              "raw_condition": "POID = '@POID'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:38": {
+        "name": "Notify Vendors",
+        "sql": "INSERT INTO VendorNotifications(NotificationID, VendorID, POID, NotificationDate, NotificationType)VALUES (@notificationID, @vendorID, @poID, GETDATE(), 'PO_Completion')",
+        "resources": {
+          "tables": "{'VENDORNOTIFICATIONS'}",
+          "columns": "set()",
+          "operations": "{'INSERT'}",
+          "where_conditions": []
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:39": {
+        "name": "Update Customer Order Status",
+        "sql": "UPDATE OrdersSET Status = 'Fulfilled', FulfillmentDate = GETDATE()WHERE OrderID = @orderID",
+        "resources": {
+          "tables": "{'ORDERSSET'}",
+          "columns": "{'ORDERID', 'STATUS'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "ORDERID",
+              "operator": "=",
+              "value": "@ORDERID",
+              "raw_condition": "ORDERID = '@ORDERID'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40": {
+        "name": "Record Financial Transaction",
+        "sql": "INSERT INTO FinancialTransactions(TransactionID, POID, OrderID, Amount, TransactionDate, TransactionType)VALUES (@transactionID, @poID, @orderID, @amount, GETDATE(), 'Order_Fulfillment')",
+        "resources": {
+          "tables": "{'FINANCIALTRANSACTIONS'}",
+          "columns": "set()",
+          "operations": "{'INSERT'}",
+          "where_conditions": []
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:42": {
+        "name": "Prepare for Integration",
+        "sql": "UPDATE IntegrationLogsSET PreparationComplete = 1,PreparedBy = @userIDWHERE LogID = @logID",
+        "resources": {
+          "tables": "{'INTEGRATIONLOGSSET'}",
+          "columns": "{'LOGID', 'PREPARATIONCOMPLETE'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "LOGID",
+              "operator": "=",
+              "value": "@LOGID",
+              "raw_condition": "LOGID = '@LOGID'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:43": {
+        "name": "Path A Integration",
+        "sql": "EXEC sp_IntegrateSystemA @logID, @processID",
+        "resources": {
+          "tables": "set()",
+          "columns": "set()",
+          "operations": "set()",
+          "where_conditions": []
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:44": {
+        "name": "Path B Integration",
+        "sql": "EXEC sp_IntegrateSystemB @logID, @processID",
+        "resources": {
+          "tables": "set()",
+          "columns": "set()",
+          "operations": "set()",
+          "where_conditions": []
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:45": {
+        "name": "Initiate Inventory Processing",
+        "sql": "BEGIN TRANSACTION;UPDATE Inventory SET QuantityAvailable = QuantityAvailable - @orderQty, LastUpdated = GETDATE() WHERE ItemID = @itemID;COMMIT;",
+        "resources": {
+          "tables": "{'INVENTORY'}",
+          "columns": "{'ITEMID', 'QUANTITYAVAILABLE'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "ITEMID",
+              "operator": "=",
+              "value": "@ITEMID;",
+              "raw_condition": "ITEMID = '@ITEMID;'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46": {
+        "name": "Update Inventory Order Status",
+        "sql": "UPDATE OrderDetails SET InventoryStatus = 'Reserved' WHERE OrderDetailID = @orderDetailID AND ItemID = @itemID;",
+        "resources": {
+          "tables": "{'ORDERDETAILS'}",
+          "columns": "{'INVENTORYSTATUS', 'ORDERDETAILID', 'ITEMID'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "ORDERDETAILID",
+              "operator": "=",
+              "value": "@ORDERDETAILID",
+              "raw_condition": "ORDERDETAILID = '@ORDERDETAILID'"
+            },
+            {
+              "column": "ITEMID",
+              "operator": "=",
+              "value": "@ITEMID;",
+              "raw_condition": "ITEMID = '@ITEMID;'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ],
+        "deadlock_message": "data query if parallel relation"
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:47": {
+        "name": "Finalize Inventory Update",
+        "sql": "UPDATE Inventory SET Status = 'Processed', LastProcessedTime = GETDATE() WHERE ItemID = @itemID;",
+        "resources": {
+          "tables": "{'INVENTORY'}",
+          "columns": "{'ITEMID', 'STATUS'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "ITEMID",
+              "operator": "=",
+              "value": "@ITEMID;",
+              "raw_condition": "ITEMID = '@ITEMID;'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      },
+      "4:d14db00e-47b3-44e9-8fce-9fc954818f3a:73": {
+        "name": "Process Standard Order",
+        "sql": "UPDATE Orders SET Status = 'Processing' WHERE OrderID = @orderID AND OrderType = 'Standard'",
+        "resources": {
+          "tables": "{'ORDERS'}",
+          "columns": "{'ORDERTYPE', 'ORDERID', 'STATUS'}",
+          "operations": "{'UPDATE'}",
+          "where_conditions": [
+            {
+              "column": "ORDERID",
+              "operator": "=",
+              "value": "@ORDERID",
+              "raw_condition": "ORDERID = '@ORDERID'"
+            },
+            {
+              "column": "ORDERTYPE",
+              "operator": "=",
+              "value": "STANDARD",
+              "raw_condition": "ORDERTYPE = 'STANDARD'"
+            }
+          ]
+        },
+        "labels": [
+          "Task_Service"
+        ]
+      }
+    }
+  },
+  "recommendations": [
+    {
+      "type": "CRITICAL",
+      "category": "DEADLOCK_PREVENTION",
+      "title": "Deadlock Cycles Detected",
+      "description": "Found 1 potential deadlock cycles. Immediate attention required.",
+      "actions": [
+        "Review transaction ordering in parallel paths",
+        "Consider implementing timeout mechanisms",
+        "Analyze resource acquisition patterns",
+        "Implement deadlock detection and recovery"
+      ]
+    },
+    {
+      "type": "HIGH",
+      "category": "CONFLICT_RESOLUTION",
+      "title": "Critical Resource Conflicts",
+      "description": "Found 1 critical conflicts requiring immediate attention.",
+      "actions": [
+        "Implement proper locking mechanisms",
+        "Consider transaction isolation levels",
+        "Review concurrent access patterns",
+        "Add conflict detection logic"
+      ]
+    },
+    {
+      "type": "MEDIUM",
+      "category": "OPTIMIZATION",
+      "title": "Performance Optimization",
+      "description": "Consider optimizations to reduce resource contention.",
+      "actions": [
+        "Optimize SQL query performance",
+        "Review indexing strategies",
+        "Consider read replicas for read-heavy operations",
+        "Implement connection pooling"
+      ]
+    }
+  ]
+}

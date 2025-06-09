@@ -89,7 +89,7 @@ def main():
         logger.info(f"Identified {len(parallel_scenarios)} parallel execution scenarios")
         
         # Initialize deadlock detector
-        deadlock_detector = DeadlockDetector(graph_data, sql_resources)
+        deadlock_detector = DeadlockDetector(graph_data, sql_resources, neo4j_connector)
           # Determine analysis mode
         analysis_mode = ANALYSIS_CONFIG.get('mode', 'standard')
         logger.info(f"Running analysis in '{analysis_mode}' mode")

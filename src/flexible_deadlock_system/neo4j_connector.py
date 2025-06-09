@@ -164,6 +164,20 @@ class Neo4jConnector:
         except Exception as e:
             logger.error(f"Error executing query: {e}")
             raise
+
+    def update_node_deadlock_message(self, node_id, message):
+        """
+        Update the deadlock message property for a node in Neo4j.
+        Args:
+            node_id (str): The node id in Neo4j (assume it's unique)
+            message (str): The deadlock message
+        """
+        query = """
+        MATCH (n) WHERE n.id = $node_id
+        SET n.deadlock_message = $message
+        """
+        with self.driver.session() as session:
+            session.run(query, node_id=node_id, message=message)
     
     def close(self):
         """

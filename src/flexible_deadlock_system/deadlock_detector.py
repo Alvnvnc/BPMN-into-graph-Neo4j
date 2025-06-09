@@ -17,7 +17,7 @@ class DeadlockDetector:
     Detects SQL deadlocks using graph theory and resource conflict analysis
     """
     
-    def __init__(self, graph_data: Dict, sql_resources: Dict):
+    def __init__(self, graph_data: Dict, sql_resources: Dict, neo4j_connector=None):
         """
         Initialize the deadlock detector
         
@@ -25,6 +25,7 @@ class DeadlockDetector:
             graph_data: Graph data containing nodes and relationships
             sql_resources: SQL resources extracted from nodes
         """
+        self.neo4j_connector = neo4j_connector
         self.graph_data = graph_data
         self.sql_resources = sql_resources
         self.resource_graph = nx.DiGraph()
@@ -733,44 +734,23 @@ class DeadlockDetector:
     def _detect_deadlock_cycles(self) -> List[List[str]]:
         """
         Detect deadlock cycles using Tarjan's strongly connected components algorithm
-        
         Returns:
             List[List[str]]: List of detected cycles
         """
         logger.info("Detecting deadlock cycles using Tarjan's algorithm...")
-        
+
+        deadlock_message = "data query if parallel relation"
+
         try:
             # Find strongly connected components
             sccs = list(nx.strongly_connected_components(self.wait_for_graph))
-            
+
             # Filter out single-node components (not cycles)
             cycles = [list(scc) for scc in sccs if len(scc) > 1]
-            
+
             logger.info(f"Found {len(cycles)} potential deadlock cycles")
-            
-            return cycles
-            
-        except Exception as e:
-            logger.error(f"Error detecting cycles: {e}")
-            return []
-        """
-        Detect cycles in the wait-for graph (potential deadlocks)
-        
-        Returns:
-            List[List[str]]: List of deadlock cycles
-        """
-        logger.info("Detecting deadlock cycles using Tarjan's algorithm...")
-        
-        try:
-            # Find strongly connected components
-            strongly_connected = list(nx.strongly_connected_components(self.wait_for_graph))
-            
-            # Filter out single-node components (not cycles)
-            cycles = [list(component) for component in strongly_connected if len(component) > 1]
-            
-            logger.info(f"Found {len(cycles)} potential deadlock cycles")
-            
-            # Store cycles as deadlock risks
+
+            # Store cycles as deadlock risks, and tag nodes with deadlock message
             for cycle in cycles:
                 risk = {
                     'type': 'DEADLOCK_CYCLE',
@@ -779,9 +759,22 @@ class DeadlockDetector:
                     'cycle_length': len(cycle)
                 }
                 self.deadlock_risks.append(risk)
-            
+                for node_id in cycle:
+                    # Tag node in resource_graph if exists
+                    if node_id in self.resource_graph.nodes:
+                        self.resource_graph.nodes[node_id]['deadlock_message'] = deadlock_message
+                    # Tag node in sql_resources if exists
+                    if node_id in self.sql_resources:
+                        self.sql_resources[node_id]['deadlock_message'] = deadlock_message
+                    # OPTIONAL: Update to Neo4j if connector ada
+                    if hasattr(self, "neo4j_connector") and self.neo4j_connector:
+                        try:
+                            self.neo4j_connector.update_node_deadlock_message(node_id, deadlock_message)
+                        except Exception as e:
+                            logger.warning(f"Failed to update deadlock_message for node {node_id} in Neo4j: {e}")
+
             return cycles
-            
+
         except Exception as e:
             logger.error(f"Error detecting deadlock cycles: {e}")
             return []

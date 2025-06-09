@@ -1,0 +1,1252 @@
+2025-06-10 02:05:28,122 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:05:28,123 - __main__ - INFO - Initializing system components...
+2025-06-10 02:05:28,123 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:05:30,180 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:05:30,180 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:05:30,189 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:05:30,189 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:05:30,189 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:05:30,190 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:05:30,227 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:05:30,228 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:05:30,228 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:05:30,228 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:05:30,229 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:05:30,229 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:05:30,230 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:05:30,230 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:05:30,231 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:05:30,231 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:05:30,231 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:05:30,232 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:05:30,232 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:05:30,232 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:05:30,232 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:05:30,233 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:05:30,233 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:05:30,233 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:05:30,234 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:05:30,269 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:05:30,269 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:05:30,270 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:05:30,270 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:05:30,270 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:05:30,270 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:05:30,277 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:05:30,278 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:05:30,281 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:05:30,282 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:05:30,282 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:05:30,283 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:05:30,283 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:05:30,283 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:05:30,284 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:05:30,284 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:05:30,284 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:05:30,285 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:05:30,285 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:05:30,286 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:05:30,286 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:05:30,286 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:05:30,287 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:05:30,287 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:05:30,288 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:05:30,289 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:05:30,289 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:05:30,290 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:05:30,290 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:05:30,291 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:05:30,291 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:05:30,292 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:05:30,292 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:05:30,293 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:05:30,293 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:05:30,294 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:05:30,294 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:05:30,295 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:05:30,295 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:05:30,296 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:05:30,296 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:05:30,299 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_020528.json
+2025-06-10 02:05:30,300 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_020528.json
+2025-06-10 02:05:30,304 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:05:30,304 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:05:30,305 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:11:13,885 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:11:13,885 - __main__ - INFO - Initializing system components...
+2025-06-10 02:11:13,886 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:11:15,950 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:11:15,950 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:11:15,959 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:11:15,959 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:11:15,959 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:11:15,959 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:11:15,991 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:11:15,991 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:11:15,991 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:11:15,991 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:11:15,992 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:11:15,993 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:11:15,999 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:11:16,000 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:11:16,000 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:11:16,000 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:11:16,000 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:11:16,000 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:11:16,004 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:11:16,004 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:11:16,007 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:11:16,008 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:11:16,008 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:11:16,008 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:11:16,008 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:11:16,008 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:11:16,008 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:11:16,008 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:11:16,008 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:11:16,008 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:11:16,009 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:11:16,009 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:11:16,009 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:11:16,009 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:11:16,009 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:11:16,009 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:11:16,009 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:11:16,009 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:11:16,009 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:11:16,010 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:11:16,010 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:11:16,010 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:11:16,010 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:11:16,010 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:11:16,010 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:11:16,010 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:11:16,011 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:11:16,011 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:11:16,011 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:11:16,011 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:11:16,011 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:11:16,012 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:11:16,012 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:11:16,014 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_021113.json
+2025-06-10 02:11:16,014 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_021113.json
+2025-06-10 02:11:16,020 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:11:16,020 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:11:16,021 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:11:43,000 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:11:43,000 - __main__ - INFO - Initializing system components...
+2025-06-10 02:11:43,001 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:11:45,061 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:11:45,062 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:11:45,074 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:11:45,074 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:11:45,074 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:11:45,075 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:11:45,119 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:11:45,119 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:11:45,121 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:11:45,121 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:11:45,133 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:11:45,133 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:11:45,134 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:11:45,134 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:11:45,134 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:11:45,134 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:11:45,139 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:11:45,139 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:11:45,144 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:11:45,144 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:11:45,144 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:11:45,145 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:11:45,145 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:11:45,145 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:11:45,145 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:11:45,146 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:11:45,146 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:11:45,147 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:11:45,147 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:11:45,148 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:11:45,148 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:11:45,149 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:11:45,150 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:11:45,150 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:11:45,150 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:11:45,151 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:11:45,152 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:11:45,153 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:11:45,155 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:11:45,157 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:11:45,158 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:11:45,160 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:11:45,161 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:11:45,165 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:11:45,167 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:11:45,169 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:11:45,169 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:11:45,170 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:11:45,175 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:11:45,178 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:11:45,179 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:11:45,182 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_021143.json
+2025-06-10 02:11:45,189 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_021143.json
+2025-06-10 02:11:45,230 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:11:45,230 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:11:45,232 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:13:08,349 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:13:08,349 - __main__ - INFO - Initializing system components...
+2025-06-10 02:13:08,349 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:13:10,445 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:13:10,445 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:13:10,453 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:13:10,453 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:13:10,453 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:13:10,453 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:13:10,480 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:13:10,482 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:13:10,482 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:13:10,482 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:13:10,486 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:13:10,488 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:13:10,488 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:13:10,488 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:13:10,488 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:13:10,488 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:13:10,491 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:13:10,491 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:13:10,493 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:13:10,493 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:13:10,494 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:13:10,494 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:13:10,494 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:13:10,494 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:13:10,494 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:13:10,494 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:13:10,494 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:13:10,494 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:13:10,494 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:13:10,494 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:13:10,494 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:13:10,494 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:13:10,494 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:13:10,494 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:13:10,495 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:13:10,495 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:13:10,495 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:13:10,495 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:13:10,496 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:13:10,496 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:13:10,496 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:13:10,499 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_021308.json
+2025-06-10 02:13:10,499 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_021308.json
+2025-06-10 02:13:10,502 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:13:10,502 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:13:10,502 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:15:24,009 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:15:24,009 - __main__ - INFO - Initializing system components...
+2025-06-10 02:15:24,009 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:15:26,050 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:15:26,050 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:15:26,058 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:15:26,058 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:15:26,058 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:15:26,058 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:15:26,128 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:15:26,128 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:15:26,128 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:15:26,128 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:15:26,129 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:15:26,129 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:15:26,129 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:15:26,129 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:15:26,129 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:15:26,129 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:15:26,130 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:15:26,131 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:15:26,131 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:15:26,131 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:15:26,131 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:15:26,131 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:15:26,132 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:15:26,133 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:15:26,133 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:15:26,133 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:15:26,133 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:15:26,133 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:15:26,133 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:15:26,133 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:15:26,133 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:15:26,133 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:15:26,133 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:15:26,133 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:15:26,134 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:15:26,134 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:15:26,136 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_021524.json
+2025-06-10 02:15:26,136 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_021524.json
+2025-06-10 02:15:26,140 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:15:26,140 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:15:26,140 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:20:07,066 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:20:07,066 - __main__ - INFO - Initializing system components...
+2025-06-10 02:20:07,066 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:20:09,100 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:20:09,100 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:20:09,112 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:20:09,112 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:20:09,112 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:20:09,112 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:20:09,158 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:20:09,158 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:20:09,158 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:20:09,158 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:20:09,159 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:20:09,159 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:20:09,159 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:20:09,159 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:20:09,159 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:20:09,159 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:20:09,159 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:20:09,159 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:20:09,160 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:20:09,161 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:20:09,161 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:20:09,161 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:20:09,161 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:20:09,161 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:20:09,161 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:20:09,161 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:20:09,161 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:20:09,161 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:20:09,161 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:20:09,161 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:20:09,161 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:20:09,161 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:20:09,162 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:20:09,163 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:20:09,163 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:20:09,163 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:20:09,163 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:20:09,164 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:20:09,168 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_022007.json
+2025-06-10 02:20:09,168 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_022007.json
+2025-06-10 02:20:09,172 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:20:09,172 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:20:09,172 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:22:08,929 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:22:08,929 - __main__ - INFO - Initializing system components...
+2025-06-10 02:22:08,929 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:22:10,973 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:22:10,973 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:22:10,981 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:22:10,981 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:22:10,981 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:22:10,981 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:22:11,009 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:22:11,009 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:22:11,009 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:22:11,009 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:22:11,016 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:22:11,016 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:22:11,016 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:22:11,016 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:22:11,016 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:22:11,016 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:22:11,016 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:22:11,016 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:22:11,018 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:22:11,018 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:22:11,019 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_022208.json
+2025-06-10 02:22:11,019 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_022208.json
+2025-06-10 02:22:11,021 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:22:11,021 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:22:11,021 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:23:47,187 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:23:47,187 - __main__ - INFO - Initializing system components...
+2025-06-10 02:23:47,187 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:23:49,241 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:23:49,241 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:23:49,248 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:23:49,249 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:23:49,249 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:23:49,249 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:23:49,281 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:23:49,281 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:23:49,281 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:23:49,281 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:23:49,281 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:23:49,281 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:23:49,281 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:23:49,281 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:23:49,282 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:23:49,283 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:23:49,283 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:23:49,283 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:23:49,283 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:23:49,283 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:23:49,283 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:23:49,284 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:23:49,284 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:23:49,285 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:23:49,285 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:23:49,285 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:23:49,285 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:23:49,285 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:23:49,285 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:23:49,285 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:23:49,285 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:23:49,288 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_022347.json
+2025-06-10 02:23:49,288 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_022347.json
+2025-06-10 02:23:49,293 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:23:49,293 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:23:49,293 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:24:24,653 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:24:24,653 - __main__ - INFO - Initializing system components...
+2025-06-10 02:24:24,653 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:24:26,729 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:24:26,729 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:24:26,741 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:24:26,741 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:24:26,741 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:24:26,742 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:24:26,776 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:24:26,776 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:24:26,776 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:24:26,776 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:24:26,776 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:24:26,776 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:24:26,776 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:24:26,776 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:24:26,776 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:24:26,776 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:24:26,777 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:24:26,778 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:24:26,778 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:24:26,778 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:24:26,778 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:24:26,778 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:24:26,778 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:24:26,778 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:24:26,778 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:24:26,778 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:24:26,778 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:24:26,778 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:24:26,778 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:24:26,778 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:24:26,778 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:24:26,778 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:24:26,778 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:24:26,778 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:24:26,779 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:24:26,779 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:24:26,779 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:24:26,779 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:24:26,780 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:24:26,780 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:24:26,780 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:24:26,780 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:24:26,782 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_022424.json
+2025-06-10 02:24:26,782 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_022424.json
+2025-06-10 02:24:26,788 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:24:26,788 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:24:26,788 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:27:58,945 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:27:58,945 - __main__ - INFO - Initializing system components...
+2025-06-10 02:27:58,945 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:28:01,003 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:28:01,003 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:28:01,012 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:28:01,012 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:28:01,013 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:28:01,013 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:28:01,057 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:28:01,057 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:28:01,057 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:28:01,057 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:28:01,058 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:28:01,058 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:28:01,058 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:28:01,058 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:28:01,058 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:28:01,058 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:28:01,058 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:28:01,058 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:28:01,058 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:28:01,058 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:28:01,058 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:28:01,058 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:28:01,058 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:28:01,062 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:28:01,062 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:28:01,062 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:28:01,062 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:28:01,062 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:28:01,062 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_022758.json
+2025-06-10 02:28:01,062 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_022758.json
+2025-06-10 02:28:01,154 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:28:01,154 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:28:01,154 - __main__ - ERROR - Error during deadlock analysis: 'str' object has no attribute 'get'
+2025-06-10 02:28:01,154 - __main__ - ERROR - Full error traceback:
+Traceback (most recent call last):
+  File "D:\Kuliah\SEMESTER 8\AUDIT SISTEM\BPMN-into-graph-Neo4j\src\flexible_deadlock_system\main.py", line 119, in main
+    tag_deadlock_nodes(neo4j_connector, results)
+  File "D:\Kuliah\SEMESTER 8\AUDIT SISTEM\BPMN-into-graph-Neo4j\src\flexible_deadlock_system\main.py", line 42, in tag_deadlock_nodes
+    node_ids = conflict.get('node_ids', [])
+               ^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+2025-06-10 02:28:01,156 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:33:49,639 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:33:49,643 - __main__ - INFO - Initializing system components...
+2025-06-10 02:33:49,643 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:33:51,713 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:33:51,714 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:33:51,723 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:33:51,723 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:33:51,723 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:33:51,723 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:33:51,759 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:33:51,761 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:33:51,761 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:33:51,761 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:33:51,761 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:33:51,762 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:33:51,762 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:33:51,763 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:33:51,763 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:33:51,764 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:33:51,765 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:33:51,765 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:33:51,766 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:33:51,766 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:33:51,767 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:33:51,767 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:33:51,767 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:33:51,768 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:33:51,768 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:33:51,768 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:33:51,768 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:33:51,769 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:33:51,769 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:33:51,769 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:33:51,769 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:33:51,769 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:33:51,770 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:33:51,770 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:33:51,770 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:33:51,770 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:33:51,770 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:33:51,771 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:33:51,771 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:33:51,772 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:33:51,772 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:33:51,772 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:33:51,772 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:33:51,772 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:33:51,773 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:33:51,775 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:33:51,775 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:33:51,776 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:33:51,776 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:33:51,777 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:33:51,777 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:33:51,777 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:33:51,777 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:33:51,778 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:33:51,778 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:33:51,778 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:33:51,778 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:33:51,779 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:33:51,780 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:33:51,780 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:33:51,783 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_023349.json
+2025-06-10 02:33:51,784 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_023349.json
+2025-06-10 02:33:51,788 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:33:51,788 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:33:51,789 - __main__ - ERROR - Error during deadlock analysis: 'str' object has no attribute 'get'
+2025-06-10 02:33:51,789 - __main__ - ERROR - Full error traceback:
+Traceback (most recent call last):
+  File "D:\Kuliah\SEMESTER 8\AUDIT SISTEM\BPMN-into-graph-Neo4j\src\flexible_deadlock_system\main.py", line 131, in main
+    tag_deadlock_nodes(neo4j_connector, results)
+  File "D:\Kuliah\SEMESTER 8\AUDIT SISTEM\BPMN-into-graph-Neo4j\src\flexible_deadlock_system\main.py", line 48, in tag_deadlock_nodes
+    for node_id in conflict.get('node_ids', []):
+                   ^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+2025-06-10 02:33:51,791 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:35:14,492 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:35:14,492 - __main__ - INFO - Initializing system components...
+2025-06-10 02:35:14,493 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:35:16,559 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:35:16,559 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:35:16,568 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:35:16,568 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:35:16,569 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:35:16,569 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:35:16,603 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:35:16,603 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:35:16,603 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:35:16,604 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:35:16,604 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:35:16,605 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:35:16,605 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:35:16,605 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:35:16,606 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:35:16,606 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:35:16,607 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:35:16,607 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:35:16,607 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:35:16,607 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:35:16,608 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:35:16,608 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:35:16,609 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:35:16,609 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:35:16,609 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:35:16,610 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:35:16,610 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:35:16,611 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:35:16,612 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:35:16,612 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:35:16,612 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:35:16,613 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:35:16,613 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:35:16,613 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:35:16,613 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:35:16,613 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:35:16,613 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:35:16,613 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:35:16,614 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:35:16,614 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:35:16,614 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:35:16,614 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:35:16,614 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:35:16,614 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:35:16,615 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:35:16,615 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:35:16,615 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:35:16,615 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:35:16,616 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:35:16,616 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:35:16,616 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:35:16,616 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:35:16,616 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:35:16,617 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:35:16,617 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:35:16,617 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:35:16,617 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:35:16,618 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:35:16,618 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:35:16,618 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:35:16,618 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:35:16,618 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:35:16,619 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:35:16,620 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:35:16,620 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:35:16,620 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:35:16,621 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:35:16,622 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:35:16,622 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:35:16,625 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_023514.json
+2025-06-10 02:35:16,625 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_023514.json
+2025-06-10 02:35:16,625 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:35:16,625 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:35:16,632 - __main__ - WARNING - Failed to tag node total_scenarios_analyzed: 'Neo4jConnector' object has no attribute 'run_query'
+2025-06-10 02:35:16,633 - __main__ - WARNING - Failed to tag node deadlock_cycles: 'Neo4jConnector' object has no attribute 'run_query'
+2025-06-10 02:35:16,633 - __main__ - WARNING - Failed to tag node conflict_analysis: 'Neo4jConnector' object has no attribute 'run_query'
+2025-06-10 02:35:16,633 - __main__ - WARNING - Failed to tag node detected_conflicts: 'Neo4jConnector' object has no attribute 'run_query'
+2025-06-10 02:35:16,634 - __main__ - WARNING - Failed to tag node deadlock_risks: 'Neo4jConnector' object has no attribute 'run_query'
+2025-06-10 02:35:16,634 - __main__ - WARNING - Failed to tag node resource_graph_stats: 'Neo4jConnector' object has no attribute 'run_query'
+2025-06-10 02:35:16,634 - __main__ - WARNING - Failed to tag node wait_for_graph_stats: 'Neo4jConnector' object has no attribute 'run_query'
+2025-06-10 02:35:16,634 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:40:15,405 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:40:15,406 - __main__ - INFO - Initializing system components...
+2025-06-10 02:40:15,407 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:40:17,465 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:40:17,465 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:40:17,473 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:40:17,474 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:40:17,474 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:40:17,474 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:40:17,504 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:40:17,505 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:40:17,505 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:40:17,505 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:40:17,506 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:40:17,507 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:40:17,507 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:40:17,507 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:40:17,507 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:40:17,508 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:40:17,508 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:40:17,508 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:40:17,509 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:40:17,509 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:40:17,509 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:40:17,509 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:40:17,510 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:40:17,510 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:40:17,511 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:40:17,512 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:40:17,512 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:40:17,512 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:40:17,512 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:40:17,512 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:40:17,512 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:40:17,512 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:40:17,513 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:40:17,513 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:40:17,513 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:40:17,513 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:40:17,513 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:40:17,513 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:40:17,514 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:40:17,514 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:40:17,514 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:40:17,514 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:40:17,514 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:40:17,514 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:40:17,514 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:40:17,515 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:40:17,515 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:40:17,515 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:40:17,515 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:40:17,516 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:40:17,516 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:40:17,517 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:40:17,517 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:40:17,517 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:40:17,517 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:40:17,517 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:40:17,517 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:40:17,517 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:40:17,517 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:40:17,517 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:40:17,518 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:40:17,518 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:40:17,518 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:40:17,518 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:40:17,518 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:40:17,518 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:40:17,519 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:40:17,519 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:40:17,519 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:40:17,521 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_024015.json
+2025-06-10 02:40:17,521 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_024015.json
+2025-06-10 02:40:17,524 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:40:17,524 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:40:17,587 - __main__ - INFO - Tagged node total_scenarios_analyzed with DeadlockMessage
+2025-06-10 02:40:17,593 - __main__ - INFO - Tagged node deadlock_cycles with DeadlockMessage
+2025-06-10 02:40:17,596 - __main__ - INFO - Tagged node conflict_analysis with DeadlockMessage
+2025-06-10 02:40:17,598 - __main__ - INFO - Tagged node detected_conflicts with DeadlockMessage
+2025-06-10 02:40:17,600 - __main__ - INFO - Tagged node deadlock_risks with DeadlockMessage
+2025-06-10 02:40:17,603 - __main__ - INFO - Tagged node resource_graph_stats with DeadlockMessage
+2025-06-10 02:40:17,605 - __main__ - INFO - Tagged node wait_for_graph_stats with DeadlockMessage
+2025-06-10 02:40:17,605 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 02:57:11,308 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 02:57:11,309 - __main__ - INFO - Initializing system components...
+2025-06-10 02:57:11,309 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 02:57:13,378 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 02:57:13,379 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 02:57:13,387 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 02:57:13,388 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 02:57:13,388 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:57:13,389 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 02:57:13,415 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 02:57:13,415 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 02:57:13,415 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 02:57:13,418 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 02:57:13,418 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 02:57:13,419 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 02:57:13,419 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 02:57:13,419 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:57:13,420 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:57:13,420 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 02:57:13,420 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 02:57:13,421 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 02:57:13,421 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 02:57:13,421 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 02:57:13,421 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 02:57:13,422 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 02:57:13,422 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 02:57:13,422 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 02:57:13,422 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 02:57:13,423 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 02:57:13,424 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 02:57:13,424 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 02:57:13,424 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:57:13,424 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:57:13,425 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 02:57:13,425 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 02:57:13,425 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 02:57:13,425 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 02:57:13,425 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 02:57:13,425 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:57:13,425 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 02:57:13,425 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 02:57:13,425 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 02:57:13,427 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 02:57:13,427 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 02:57:13,427 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 02:57:13,427 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 02:57:13,428 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 02:57:13,428 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 02:57:13,428 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 02:57:13,429 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 02:57:13,429 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 02:57:13,429 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:57:13,430 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 02:57:13,430 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 02:57:13,430 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 02:57:13,430 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 02:57:13,431 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 02:57:13,431 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 02:57:13,431 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 02:57:13,431 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 02:57:13,432 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 02:57:13,433 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 02:57:13,433 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 02:57:13,433 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 02:57:13,433 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 02:57:13,433 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 02:57:13,433 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 02:57:13,433 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 02:57:13,433 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 02:57:13,433 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 02:57:13,433 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 02:57:13,433 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 02:57:13,433 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_025711.json
+2025-06-10 02:57:13,433 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_025711.json
+2025-06-10 02:57:13,441 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 02:57:13,441 - __main__ - INFO - Reports saved to: results
+2025-06-10 02:57:13,441 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 03:28:24,418 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 03:28:24,418 - __main__ - INFO - Initializing system components...
+2025-06-10 03:28:24,418 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 03:28:26,469 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 03:28:26,469 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 03:28:26,490 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 03:28:26,490 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 03:28:26,490 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 03:28:26,490 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 03:28:26,585 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 03:28:26,585 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 03:28:26,585 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 03:28:26,585 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 03:28:26,597 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 03:28:26,597 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 03:28:26,597 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 03:28:26,597 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 03:28:26,597 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 03:28:26,597 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 03:28:26,602 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 03:28:26,602 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 03:28:26,602 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 03:28:26,602 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 03:28:26,602 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 03:28:26,605 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 03:28:26,605 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 03:28:26,605 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 03:28:26,605 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 03:28:26,605 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 03:28:26,605 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 03:28:26,605 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 03:28:26,605 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 03:28:26,605 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 03:28:26,605 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 03:28:26,605 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 03:28:26,605 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 03:28:26,605 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 03:28:26,605 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 03:28:26,605 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 03:28:26,613 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 03:28:26,613 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 03:28:26,613 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 03:28:26,613 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 03:28:26,613 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 03:28:26,613 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 03:28:26,613 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 03:28:26,613 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 03:28:26,621 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 03:28:26,621 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 03:28:26,621 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 03:28:26,621 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 03:28:26,621 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 03:28:26,621 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 03:28:26,621 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 03:28:26,621 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 03:28:26,621 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 03:28:26,628 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 03:28:26,628 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 03:28:26,629 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_032824.json
+2025-06-10 03:28:26,629 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_032824.json
+2025-06-10 03:28:26,637 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 03:28:26,637 - __main__ - INFO - Reports saved to: results
+2025-06-10 03:28:26,637 - __main__ - INFO - Neo4j connection closed.
+2025-06-10 03:41:17,716 - __main__ - INFO - Starting Flexible Deadlock Detection System...
+2025-06-10 03:41:17,716 - __main__ - INFO - Initializing system components...
+2025-06-10 03:41:17,716 - __main__ - INFO - Testing Neo4j connection...
+2025-06-10 03:41:19,771 - neo4j_connector - INFO - Neo4j connection test successful
+2025-06-10 03:41:19,771 - __main__ - INFO - Fetching graph data from Neo4j...
+2025-06-10 03:41:19,794 - neo4j_connector - INFO - Fetched 33 nodes and 36 relationships
+2025-06-10 03:41:19,794 - __main__ - INFO - Found 33 nodes and 36 relationships
+2025-06-10 03:41:19,794 - __main__ - INFO - Extracting SQL resources from graph data...
+2025-06-10 03:41:19,794 - sql_resource_extractor - INFO - Extracting SQL resources from graph data...
+2025-06-10 03:41:19,891 - sql_resource_extractor - INFO - Found 20 nodes with SQL operations
+2025-06-10 03:41:19,891 - __main__ - INFO - Extracted SQL resources from 20 nodes
+2025-06-10 03:41:19,891 - __main__ - INFO - Analyzing parallel execution paths...
+2025-06-10 03:41:19,891 - parallel_path_analyzer - INFO - Identifying parallel execution paths...
+2025-06-10 03:41:19,891 - parallel_path_analyzer - INFO - Total gateways identified: 34
+2025-06-10 03:41:19,891 - parallel_path_analyzer - INFO - Gateway type distribution: {'OR_SPLIT': 14, 'UNKNOWN': 2, 'AND_SPLIT': 5, 'XOR_SPLIT': 5, 'XOR_JOIN': 3, 'OR_JOIN': 3, 'AND_JOIN': 2}
+2025-06-10 03:41:19,891 - parallel_path_analyzer - INFO - Found 24 realistic gateways for parallel analysis
+2025-06-10 03:41:19,891 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 03:41:19,891 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_SPLIT with 2 paths (forward analysis)
+2025-06-10 03:41:19,899 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 2 paths (forward analysis)
+2025-06-10 03:41:19,899 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_SPLIT with 3 paths (forward analysis)
+2025-06-10 03:41:19,899 - parallel_path_analyzer - INFO - Processing 5 JOIN gateways for backward analysis
+2025-06-10 03:41:19,899 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 (OR_JOIN)
+2025-06-10 03:41:19,899 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:29 produced 0 scenarios
+2025-06-10 03:41:19,899 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 (OR_JOIN)
+2025-06-10 03:41:19,899 - parallel_path_analyzer - INFO - JOIN gateway 4:d14db00e-47b3-44e9-8fce-9fc954818f3a:31 produced 0 scenarios
+2025-06-10 03:41:19,899 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: bcf0cce2-df40-4c87-822b-17ce53163039 (OR_JOIN)
+2025-06-10 03:41:19,907 - parallel_path_analyzer - INFO - Found TRULY PARALLEL OR_JOIN with 3 converging paths (backward analysis)
+2025-06-10 03:41:19,907 - parallel_path_analyzer - INFO - JOIN gateway bcf0cce2-df40-4c87-822b-17ce53163039 produced 1 scenarios
+2025-06-10 03:41:19,907 - parallel_path_analyzer - INFO - ADDED OR_JOIN scenario from gateway bcf0cce2-df40-4c87-822b-17ce53163039
+2025-06-10 03:41:19,907 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d (AND_JOIN)
+2025-06-10 03:41:19,907 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Found 2 converging paths with SQL nodes
+2025-06-10 03:41:19,907 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 03:41:19,907 - parallel_path_analyzer - INFO -   Neo4j Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 03:41:19,913 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Validation result = True
+2025-06-10 03:41:19,913 - parallel_path_analyzer - INFO - AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d: Building scenario with 2 paths
+2025-06-10 03:41:19,913 - parallel_path_analyzer - INFO - ADDED AND_JOIN 2a5b26ec-0f86-4367-b4e4-11bab697253d scenario to result list
+2025-06-10 03:41:19,913 - parallel_path_analyzer - INFO - Found TRULY PARALLEL AND_JOIN with 2 converging paths (backward analysis)
+2025-06-10 03:41:19,913 - parallel_path_analyzer - INFO - JOIN gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d produced 1 scenarios
+2025-06-10 03:41:19,919 - parallel_path_analyzer - INFO - ADDED AND_JOIN scenario from gateway 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 03:41:19,919 - parallel_path_analyzer - INFO - Analyzing JOIN gateway: 389cc933-78d3-4cbf-adae-cdc01615cbe4 (AND_JOIN)
+2025-06-10 03:41:19,919 - parallel_path_analyzer - INFO - Neo4j AND_JOIN 389cc933-78d3-4cbf-adae-cdc01615cbe4: Found 1 converging paths with SQL nodes
+2025-06-10 03:41:19,919 - parallel_path_analyzer - INFO -   Neo4j Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:40']
+2025-06-10 03:41:19,919 - parallel_path_analyzer - INFO - JOIN gateway 389cc933-78d3-4cbf-adae-cdc01615cbe4 produced 0 scenarios
+2025-06-10 03:41:19,919 - parallel_path_analyzer - INFO - Found 6 parallel execution scenarios
+2025-06-10 03:41:19,927 - __main__ - INFO - Identified 6 parallel execution scenarios
+2025-06-10 03:41:19,927 - __main__ - INFO - Running analysis in 'standard' mode
+2025-06-10 03:41:19,927 - __main__ - INFO - Executing standard deadlock analysis...
+2025-06-10 03:41:19,927 - deadlock_detector - INFO - Analyzing deadlocks across 6 parallel scenarios...
+2025-06-10 03:41:19,927 - deadlock_detector - INFO - Building wait-for graph from 6 scenarios...
+2025-06-10 03:41:19,927 - deadlock_detector - INFO - Scenario types to process: ['OR_SPLIT', 'OR_SPLIT', 'AND_SPLIT', 'AND_SPLIT', 'OR_JOIN', 'AND_JOIN']
+2025-06-10 03:41:19,927 - deadlock_detector - INFO - Processing scenario 1/6: OR_SPLIT
+2025-06-10 03:41:19,927 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 03:41:19,927 - deadlock_detector - INFO - Processing scenario 2/6: OR_SPLIT
+2025-06-10 03:41:19,927 - deadlock_detector - INFO - Analyzing scenario: OR_SPLIT with 2 paths
+2025-06-10 03:41:19,935 - deadlock_detector - INFO - Processing scenario 3/6: AND_SPLIT
+2025-06-10 03:41:19,935 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 2 paths
+2025-06-10 03:41:19,935 - deadlock_detector - INFO - Processing scenario 4/6: AND_SPLIT
+2025-06-10 03:41:19,935 - deadlock_detector - INFO - Analyzing scenario: AND_SPLIT with 3 paths
+2025-06-10 03:41:19,935 - deadlock_detector - INFO - Processing scenario 5/6: OR_JOIN
+2025-06-10 03:41:19,943 - deadlock_detector - INFO - Analyzing scenario: OR_JOIN with 3 paths
+2025-06-10 03:41:19,943 - deadlock_detector - INFO - Processing scenario 6/6: AND_JOIN
+2025-06-10 03:41:19,943 - deadlock_detector - INFO - Analyzing scenario: AND_JOIN with 2 paths
+2025-06-10 03:41:19,943 - deadlock_detector - INFO - Processing AND_JOIN scenario - Gateway: 2a5b26ec-0f86-4367-b4e4-11bab697253d
+2025-06-10 03:41:19,943 - deadlock_detector - INFO -   AND_JOIN Path 1: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:30']
+2025-06-10 03:41:19,943 - deadlock_detector - INFO -   AND_JOIN Path 2: 1 SQL nodes - ['4:d14db00e-47b3-44e9-8fce-9fc954818f3a:46']
+2025-06-10 03:41:19,943 - deadlock_detector - INFO -   [OK] CONFLICT VALIDATED: Update Inventory Quantity <-> Update Inventory Order Status - WRITE_WRITE_CROSS_TABLE
+2025-06-10 03:41:19,943 - deadlock_detector - INFO - Found 1 conflicts between paths in AND_JOIN
+2025-06-10 03:41:19,943 - deadlock_detector - INFO - Wait-for graph built with 2 nodes and 2 edges
+2025-06-10 03:41:19,951 - deadlock_detector - INFO - Detecting deadlock cycles using Tarjan's algorithm...
+2025-06-10 03:41:19,951 - deadlock_detector - INFO - Found 1 potential deadlock cycles
+2025-06-10 03:41:20,037 - deadlock_detector - INFO - Deadlock analysis completed. Found 1 potential deadlock cycles
+2025-06-10 03:41:20,037 - report_generator - INFO - Generating comprehensive deadlock analysis report...
+2025-06-10 03:41:20,040 - report_generator - INFO - Report saved successfully to results\deadlock_analysis_report_20250610_034117.json
+2025-06-10 03:41:20,040 - report_generator - INFO - Comprehensive report saved to: results\deadlock_analysis_report_20250610_034117.json
+2025-06-10 03:41:20,057 - __main__ - INFO - Deadlock analysis completed successfully.
+2025-06-10 03:41:20,057 - __main__ - INFO - Reports saved to: results
+2025-06-10 03:41:20,057 - __main__ - INFO - Neo4j connection closed.

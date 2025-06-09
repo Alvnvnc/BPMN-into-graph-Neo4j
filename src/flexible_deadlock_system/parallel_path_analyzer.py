@@ -247,6 +247,7 @@ class ParallelPathAnalyzer:
         
         logger.info(f"Found {len(realistic_gateways)} realistic gateways for parallel analysis")
         
+        
         # Method 1: Analyze from SPLIT gateways (forward analysis)
         split_gateways = [g for g in realistic_gateways if 'SPLIT' in g['gateway_type']]
         for gateway in split_gateways:
@@ -266,9 +267,9 @@ class ParallelPathAnalyzer:
             for scenario in join_scenarios:
                 if not self._is_duplicate_scenario(scenario, parallel_scenarios):
                     parallel_scenarios.append(scenario)
-                    logger.info(f"✅ ADDED {scenario['gateway_type']} scenario from gateway {scenario['gateway_node_id']}")
+                    logger.info(f"ADDED {scenario['gateway_type']} scenario from gateway {scenario['gateway_node_id']}")
                 else:
-                    logger.info(f"❌ SKIPPED {scenario['gateway_type']} scenario from gateway {scenario['gateway_node_id']} - duplicate detected")
+                    logger.info(f"SKIPPED {scenario['gateway_type']} scenario from gateway {scenario['gateway_node_id']} - duplicate detected")
         
         logger.info(f"Found {len(parallel_scenarios)} parallel execution scenarios")
         return parallel_scenarios
@@ -359,11 +360,11 @@ class ParallelPathAnalyzer:
             if scenario['is_truly_parallel']:
                 scenarios.append(scenario)
                 if gateway_type == 'AND_JOIN':
-                    logger.info(f"✅ ADDED AND_JOIN {gateway_id} scenario to result list")
+                    logger.info(f"ADDED AND_JOIN {gateway_id} scenario to result list")
                 logger.info(f"Found TRULY PARALLEL {gateway_type} with {len(converging_paths)} converging paths (backward analysis)")
             else:
                 if gateway_type == 'AND_JOIN':
-                    logger.warning(f"❌ SKIPPING AND_JOIN {gateway_id}: Validation failed - paths not truly parallel")
+                    logger.warning(f"SKIPPING AND_JOIN {gateway_id}: Validation failed - paths not truly parallel")
                 else:
                     logger.debug(f"Skipping {gateway_type} - paths not truly parallel (backward analysis)")
         else:
