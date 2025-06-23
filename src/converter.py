@@ -368,6 +368,9 @@ class XPDLToNeo4jConverter:
                 'incoming': incoming,
                 'outgoing': outgoing
             }
+            
+            # Debug logging for gateway patterns
+            logger.info(f"Gateway {gateway_id} ({gateway['name']}): {gateway_subtype} {pattern_type} -> {rel_type} (in:{len(incoming)}, out:{len(outgoing)})")
         
         logger.info(f"Analyzed {len(self.gateway_patterns)} gateway patterns")
     
@@ -728,9 +731,17 @@ class XPDLToNeo4jConverter:
             from_gateway_id = connection['from_gateway_id']
             to_gateway_id = connection['to_gateway_id']
             
-            # Get relationship types based on gateway types and patterns
-            from_rel_type = self._get_relationship_type_for_gateway(from_gateway_id, 'outgoing')
-            to_rel_type = self._get_relationship_type_for_gateway(to_gateway_id, 'incoming')
+            # For gateway-to-gateway connections, use the actual gateway patterns
+            # instead of assuming roles based on position
+            from_rel_type = self._get_gateway_relationship_type(from_gateway_id, 'source')
+            to_rel_type = self._get_gateway_relationship_type(to_gateway_id, 'target')
+            
+            # Debug logging to ensure correct types are used
+            from_gateway_pattern = self.gateway_patterns.get(from_gateway_id, {})
+            to_gateway_pattern = self.gateway_patterns.get(to_gateway_id, {})
+            
+            logger.info(f"Gateway-to-Gateway connection: {from_gateway_id} ({from_gateway_pattern.get('pattern', 'Unknown')}-{from_gateway_pattern.get('subtype', 'Unknown')}) -> {to_gateway_id} ({to_gateway_pattern.get('pattern', 'Unknown')}-{to_gateway_pattern.get('subtype', 'Unknown')})")
+            logger.info(f"Relationship types: {from_rel_type} -> {to_rel_type}")
             
             # Create relationship from source activity to intermediate node
             self._create_gateway_to_intermediate_relationship(session, from_gateway_id, connection['intermediate_id'], from_rel_type, connection)
@@ -757,56 +768,53 @@ class XPDLToNeo4jConverter:
         pattern = self.gateway_patterns[gateway_id]
         gateway_type = self.gateways[gateway_id]['subtype']
         
-        if direction == 'outgoing':
-            # For outgoing, use the split type if it's a split, otherwise use a generic type
-            if pattern['pattern'] == 'Split':
-                return pattern['relationship_type'] 
-            else:
-                return f"{self._map_gateway_to_prefix(gateway_type)}_CONNECTION"
-        else:  # incoming
-            # For incoming, use the join type if it's a join, otherwise use a generic type
-            if pattern['pattern'] == 'Join':
-                return pattern['relationship_type']
-            else:
-                return f"{self._map_gateway_to_prefix(gateway_type)}_CONNECTION"
+        # Always use the proper relationship type based on the gateway pattern
+        # regardless of direction - this ensures consistency
+        return pattern['relationship_type']
     
-    def _map_gateway_to_prefix(self, gateway_type: str) -> str:
+    def _get_gateway_relationship_type(self, gateway_id: str, role: str) -> str:
         """
-        Map gateway type to prefix for relationship type.
+        Determine the relationship type for a gateway in gateway-to-gateway connections.
         
         Args:
-            gateway_type: The type of the gateway
+            gateway_id: ID of the gateway
+            role: Either 'source' (outgoing from this gateway) or 'target' (incoming to this gateway)
             
         Returns:
-            String prefix for relationship type
+            Relationship type
         """
-        if gateway_type == 'Exclusive':
-            return 'XOR'
-        elif gateway_type == 'Inclusive':
-            return 'OR'
-        elif gateway_type == 'Parallel':
-            return 'AND'
-        elif gateway_type == 'Complex':
-            return 'COMPLEX'
-        elif gateway_type == 'EventBased':
-            return 'EVENT'
-        else:
-            return 'GATEWAY'
+        if gateway_id not in self.gateway_patterns:
+            logger.warning(f"Gateway {gateway_id} not found in gateway_patterns, using default")
+            return 'GATEWAY_CONNECTION'
+            
+        # Use the actual gateway pattern analysis instead of assuming split/join based on role
+        pattern = self.gateway_patterns[gateway_id]
+        
+        # Debug logging
+        logger.info(f"Gateway {gateway_id} role={role}: pattern={pattern['pattern']}, subtype={pattern['subtype']}, rel_type={pattern['relationship_type']}")
+        
+        # Always return the correct relationship type based on the gateway's actual pattern
+        # This ensures consistency with the XPDL definition
+        return pattern['relationship_type']
+    
+
     
     def _create_gateway_to_intermediate_relationship(self, session, gateway_id: str, intermediate_id: str, 
                                                     rel_type: str, connection: Dict) -> None:
         """
-        Create relationship from gateway to intermediate node.
+        Create relationship from activities through gateway to intermediate node.
         
         Args:
             session: Neo4j session
             gateway_id: ID of the source gateway
             intermediate_id: ID of the intermediate node
-            rel_type: Relationship type
+            rel_type: Relationship type based on gateway pattern
             connection: Connection information
         """
         properties = {
-            'transition_id': connection['transition_id']
+            'transition_id': connection['transition_id'],
+            'gateway_id': gateway_id,
+            'gateway_type': self.gateways[gateway_id]['subtype']
         }
         
         if connection['condition']:
@@ -837,17 +845,19 @@ class XPDLToNeo4jConverter:
     def _create_intermediate_to_gateway_relationship(self, session, intermediate_id: str, gateway_id: str, 
                                                    rel_type: str, connection: Dict) -> None:
         """
-        Create relationship from intermediate node to target activities.
+        Create relationship from intermediate node through gateway to target activities.
         
         Args:
             session: Neo4j session
             intermediate_id: ID of the intermediate node
             gateway_id: ID of the target gateway
-            rel_type: Relationship type
+            rel_type: Relationship type based on gateway pattern
             connection: Connection information
         """
         properties = {
-            'transition_id': connection['transition_id']
+            'transition_id': connection['transition_id'],
+            'gateway_id': gateway_id,
+            'gateway_type': self.gateways[gateway_id]['subtype']
         }
         
         if connection['condition']:
